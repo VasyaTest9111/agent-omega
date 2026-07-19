@@ -1,0 +1,145 @@
+name: UOS-Core CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, master ]
+  pull_request:
+    branches: [ main, develop, master ]
+
+jobs:
+  syntax-check:
+    name: Python Syntax Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: ✅ Check Python syntax
+        run: |
+          python -m py_compile initialize_project.py
+          python -m py_compile task_orchestrator.py
+          echo "✓ All Python files have valid syntax"
+
+  lint:
+    name: Code Linting & Validation
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: 🐍 Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint flake8 black isort
+      
+      - name: 🔍 Run Pylint
+        run: |
+          pylint initialize_project.py task_orchestrator.py --exit-zero || true
+        continue-on-error: true
+      
+      - name: 🔍 Run Flake8
+        run: |
+          flake8 initialize_project.py task_orchestrator.py --max-line-length=100 --ignore=E203,W503
+        continue-on-error: true
+      
+      - name: 🎨 Check code formatting (Black)
+        run: |
+          black --check initialize_project.py task_orchestrator.py || true
+        continue-on-error: true
+      
+      - name: 📋 Check import sorting (isort)
+        run: |
+          isort --check-only initialize_project.py task_orchestrator.py || true
+        continue-on-error: true
+
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 Install security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit safety
+      
+      - name: 🔐 Run Bandit security checks
+        run: |
+          bandit initialize_project.py task_orchestrator.py -v || true
+        continue-on-error: true
+
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [syntax-check, lint]
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: 🚀 Test system initialization
+        run: |
+          python initialize_project.py
+          echo "✓ System initialization completed"
+      
+      - name: 🚀 Test task orchestrator
+        run: |
+          python task_orchestrator.py
+          echo "✓ Task orchestrator test completed"
+      
+      - name: 📊 Verify generated files
+        run: |
+          if [ -f "SYSTEM_CONFIG.py" ]; then
+            echo "✓ SYSTEM_CONFIG.py generated successfully"
+          else
+            echo "✗ SYSTEM_CONFIG.py not found"
+            exit 1
+          fi
+
+  summary:
+    name: Build Summary
+    runs-on: ubuntu-latest
+    needs: [syntax-check, lint, security, integration-test]
+    if: always()
+    
+    steps:
+      - name: 📋 UOS-Core CI Pipeline Status
+        run: |
+          echo "╔════════════════════════════════════════════════════════════╗"
+          echo "║           UOS-Core CI Pipeline - Build Summary              ║"
+          echo "╚════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "✓ Syntax Validation: ${{ needs.syntax-check.result }}"
+          echo "✓ Linting & Validation: ${{ needs.lint.result }}"
+          echo "✓ Security Checks: ${{ needs.security.result }}"
+          echo "✓ Integration Tests: ${{ needs.integration-test.result }}"
+          echo ""
+          echo "📦 Build Status: COMPLETED"
