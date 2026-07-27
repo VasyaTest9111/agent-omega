@@ -20,6 +20,8 @@ class BotManager:
     Manages 6 independent Telegram bot nodes with centralized orchestration
     """
     
+    TELEGRAM_NODES_COUNT = 6  # Constants for maintainability
+    
     def __init__(self):
         """Initialize the Bot Manager with all 6 Telegram nodes."""
         self.nodes = {}
@@ -35,7 +37,7 @@ class BotManager:
         
         # Initialize Telegram tokens
         telegram_tokens = []
-        for i in range(1, 7):
+        for i in range(1, self.TELEGRAM_NODES_COUNT + 1):
             token_key = f"TELEGRAM_TOKEN_{i}"
             token = os.getenv(token_key)
             
@@ -48,9 +50,10 @@ class BotManager:
                     "status": "INITIALIZING",
                     "messages_processed": 0
                 }
-                logger.info(f"✓ Telegram Node {i} initialized (Token: {token[:20]}...)")
+                # Secure logging: mask token completely
+                logger.info(f"\u2713 Telegram Node {i} initialized (Token: {'*' * len(token)})")
             else:
-                logger.warning(f"✗ {token_key} not found in environment variables")
+                logger.warning(f"\u2717 {token_key} not found in environment variables")
         
         # Initialize Gemini API node
         self.gemini_api_key = os.getenv("GEMINI_API_KEY")
@@ -61,11 +64,12 @@ class BotManager:
                 "status": "INITIALIZING",
                 "requests_processed": 0
             }
-            logger.info(f"✓ Gemini API Node initialized (Key: {self.gemini_api_key[:15]}...)")
+            # Secure logging: mask API key completely
+            logger.info(f"\u2713 Gemini API Node initialized (Key: {'*' * len(self.gemini_api_key)})")
         else:
-            logger.warning("✗ GEMINI_API_KEY not found in environment variables")
+            logger.warning("\u2717 GEMINI_API_KEY not found in environment variables")
         
-        logger.info(f"\n✓ Total nodes initialized: {len(self.nodes)}")
+        logger.info(f"\n\u2713 Total nodes initialized: {len(self.nodes)}")
         logger.info("=" * 70)
     
     def activate_nodes(self):
@@ -77,9 +81,9 @@ class BotManager:
         for node_name, node_config in self.nodes.items():
             node_config["status"] = "ACTIVE"
             self.active_nodes.append(node_name)
-            logger.info(f"✓ {node_name}: {node_config['status']}")
+            logger.info(f"\u2713 {node_name}: {node_config['status']}")
         
-        logger.info(f"\n✓ Active nodes: {len(self.active_nodes)}/{len(self.nodes)}")
+        logger.info(f"\n\u2713 Active nodes: {len(self.active_nodes)}/{len(self.nodes)}")
         logger.info("=" * 70)
     
     def get_node_status(self):
@@ -105,11 +109,11 @@ class BotManager:
         )
         
         if all_active:
-            logger.info(f"✓ All {len(self.active_nodes)} nodes are ACTIVE")
+            logger.info(f"\u2713 All {len(self.active_nodes)} nodes are ACTIVE")
             logger.info("=" * 70)
             return True
         else:
-            logger.error("✗ Some nodes are not ACTIVE")
+            logger.error("\u2717 Some nodes are not ACTIVE")
             logger.info("=" * 70)
             return False
     
@@ -124,28 +128,28 @@ class BotManager:
         node_name = f"TELEGRAM_NODE_{node_id}"
         
         if node_name not in self.nodes:
-            logger.error(f"✗ Invalid node ID: {node_id}")
+            logger.error(f"\u2717 Invalid node ID: {node_id}")
             return False
         
         node = self.nodes[node_name]
         
         if node["status"] != "ACTIVE":
-            logger.warning(f"✗ Node {node_name} is not ACTIVE")
+            logger.warning(f"\u2717 Node {node_name} is not ACTIVE")
             return False
         
         try:
-            logger.info(f"📨 Processing message on {node_name}")
-            logger.info(f"   Message data: {message_data}")
+            logger.info(f"\ud83d\udce8 Processing message on {node_name}")
+            logger.info(f"   Message data keys: {list(message_data.keys())}")
             
-            # Route to UOS_ENGINE (placeholder)
+            # Route to UOS_ENGINE (lazy import to avoid circular dependency)
             result = self._route_to_uos_engine(node_id, message_data)
             
             node["messages_processed"] += 1
-            logger.info(f"✓ Message processed successfully (Total: {node['messages_processed']})")
+            logger.info(f"\u2713 Message processed successfully (Total: {node['messages_processed']})")
             
             return True
         except Exception as e:
-            logger.error(f"✗ Error processing message: {e}")
+            logger.error(f"\u2717 Error processing message: {e}")
             return False
     
     def process_gemini_request(self, request_data: Dict):
@@ -156,33 +160,34 @@ class BotManager:
             request_data: Request data for Gemini API
         """
         if "GEMINI_NODE" not in self.nodes:
-            logger.error("✗ Gemini node not initialized")
+            logger.error("\u2717 Gemini node not initialized")
             return False
         
         node = self.nodes["GEMINI_NODE"]
         
         if node["status"] != "ACTIVE":
-            logger.warning("✗ Gemini node is not ACTIVE")
+            logger.warning("\u2717 Gemini node is not ACTIVE")
             return False
         
         try:
-            logger.info("🤖 Processing Gemini API request")
-            logger.info(f"   Request data: {request_data}")
+            logger.info("\ud83e\udd16 Processing Gemini API request")
+            logger.info(f"   Request data keys: {list(request_data.keys())}")
             
-            # Route to UOS_ENGINE (placeholder)
+            # Route to UOS_ENGINE (lazy import to avoid circular dependency)
             result = self._route_to_uos_engine("gemini", request_data)
             
             node["requests_processed"] += 1
-            logger.info(f"✓ Gemini request processed successfully (Total: {node['requests_processed']})")
+            logger.info(f"\u2713 Gemini request processed successfully (Total: {node['requests_processed']})")
             
             return True
         except Exception as e:
-            logger.error(f"✗ Error processing Gemini request: {e}")
+            logger.error(f"\u2717 Error processing Gemini request: {e}")
             return False
     
     def _route_to_uos_engine(self, source, data):
         """
         Route message/request to UOS_ENGINE for processing.
+        Uses lazy import to avoid circular dependency.
         
         Args:
             source: Source node ID or name
@@ -192,17 +197,17 @@ class BotManager:
             Processing result
         """
         try:
-            # Import UOS_ENGINE when available
+            # Lazy import to break circular dependency
             from uos_engine import UOSEngine
             
             engine = UOSEngine()
             result = engine.process(source, data)
             return result
         except ImportError:
-            logger.warning("⚠ UOS_ENGINE not yet available, using mock processing")
+            logger.warning("\u26a0 UOS_ENGINE not yet available, using mock processing")
             return {"status": "processed", "mock": True}
         except Exception as e:
-            logger.error(f"✗ Error routing to UOS_ENGINE: {e}")
+            logger.error(f"\u2717 Error routing to UOS_ENGINE: {e}")
             return {"status": "error", "message": str(e)}
     
     def get_statistics(self):
@@ -223,9 +228,9 @@ class BotManager:
     
     def print_system_info(self):
         """Print detailed system information."""
-        logger.info("\n" + "╔" + "=" * 68 + "╗")
-        logger.info("║" + " " * 15 + "UOS MULTI-NODE SYSTEM INFO" + " " * 27 + "║")
-        logger.info("╚" + "=" * 68 + "╝")
+        logger.info("\n" + "\u2554" + "=" * 68 + "\u2557")
+        logger.info("\u2551" + " " * 15 + "UOS MULTI-NODE SYSTEM INFO" + " " * 27 + "\u2551")
+        logger.info("\u255a" + "=" * 68 + "\u255d")
         
         stats = self.get_statistics()
         
@@ -238,10 +243,10 @@ class BotManager:
         logger.info("\nNode Status:")
         
         for node_name, node_config in self.nodes.items():
-            status_icon = "🟢" if node_config["status"] == "ACTIVE" else "🔴"
+            status_icon = "\ud83d\udfe2" if node_config["status"] == "ACTIVE" else "\ud83d\udd34"
             logger.info(f"  {status_icon} {node_name}: {node_config['status']}")
         
-        logger.info("╚" + "=" * 68 + "╝\n")
+        logger.info("\u255a" + "=" * 68 + "\u255d\n")
 
 
 def main():
@@ -255,9 +260,9 @@ def main():
         
         # Verify all nodes are active
         if bot_manager.verify_all_nodes_active():
-            logger.info("✓ System ready for operation")
+            logger.info("\u2713 System ready for operation")
         else:
-            logger.error("✗ System initialization failed")
+            logger.error("\u2717 System initialization failed")
             return False
         
         # Print system info
@@ -266,7 +271,7 @@ def main():
         return True
     
     except Exception as e:
-        logger.error(f"✗ Fatal error in bot_manager: {e}")
+        logger.error(f"\u2717 Fatal error in bot_manager: {e}")
         return False
 
 
