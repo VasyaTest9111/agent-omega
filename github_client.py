@@ -10,7 +10,7 @@ GITHUB_API = "https://api.github.com"
 
 class GitHubClient:
     def __init__(self, token: Optional[str] = None):
-        self.token = token or os.getenv("GITHUB_TOKEN")
+        self.token = token or os.getenv("GH_TOKEN")
         self.headers = {
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",

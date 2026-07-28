@@ -65,6 +65,11 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Test GitHub client import
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          OWNER_M: ${{ secrets.OWNER_M }}
+        run: python -c "from github_client import GitHubClient; print('✓ GitHubClient OK')"
       - name: Test system initialization
         run: python initialize_project.py
       - name: Test bot manager
