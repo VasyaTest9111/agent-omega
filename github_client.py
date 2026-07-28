@@ -22,6 +22,12 @@ class GitHubClient:
         url = f"{GITHUB_API}{path}"
         try:
             r = requests.get(url, headers=self.headers, params=params, timeout=10)
+            if r.status_code == 401:
+                logger.error("GitHub API: невірний токен (401)")
+                return None
+            if r.status_code == 403:
+                logger.error("GitHub API: доступ заборонено (403) — перевір права токена")
+                return None
             r.raise_for_status()
             return r.json()
         except requests.RequestException as e:
