@@ -64,7 +64,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install python-dotenv requests
+        run: pip install -r requirements.txt
       - name: Test system initialization
         run: python initialize_project.py
       - name: Test bot manager
