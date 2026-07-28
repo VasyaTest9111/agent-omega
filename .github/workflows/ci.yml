@@ -1,0 +1,77 @@
+name: UOS-Core CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, master, "claude/**", "vibe/**" ]
+  pull_request:
+    branches: [ main, develop, master ]
+
+jobs:
+  syntax-check:
+    name: Python Syntax Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check Python syntax
+        run: |
+          python -m py_compile initialize_project.py
+          python -m py_compile task_orchestrator.py
+          python -m py_compile uos_engine.py
+          python -m py_compile bot_manager.py
+          python -m py_compile github_client.py
+          python -m py_compile gemini_client.py
+          python -m py_compile telegram_bot.py
+          echo "✓ All Python files have valid syntax"
+
+  lint:
+    name: Code Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install linting tools
+        run: pip install flake8
+      - name: Run Flake8
+        run: flake8 *.py --max-line-length=120 --ignore=E203,W503
+        continue-on-error: true
+
+  security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install bandit
+        run: pip install bandit
+      - name: Run Bandit
+        run: bandit *.py -v --severity-level medium
+        continue-on-error: true
+
+  integration-test:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [syntax-check]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install python-dotenv requests
+      - name: Test system initialization
+        run: python initialize_project.py
+      - name: Test bot manager
+        run: python bot_manager.py
+      - name: Test UOS Engine
+        run: python uos_engine.py
+      - name: Test GitHub client import
+        run: python -c "from github_client import GitHubClient; print('✓ GitHubClient OK')"
+      - name: Test Gemini client import
+        run: python -c "from gemini_client import GeminiClient; print('✓ GeminiClient OK')"
