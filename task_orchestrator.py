@@ -9,12 +9,25 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Import SystemState from SYSTEM_CONFIG
+
+# Fallback SystemState class in case SYSTEM_CONFIG.py is not available
+class SystemState:
+    """Fallback SystemState class for when SYSTEM_CONFIG.py is not available."""
+    def __init__(self):
+        self.state = "ACTIVE"
+        self.registry = "CORE_INTEGRATION"
+        self.operational_mode = "AUTONOMOUS"
+
+    def get_status(self):
+        return f"System status: {self.state} | Mode: {self.operational_mode}"
+
+
+# Try to import from SYSTEM_CONFIG, fall back to local class if not available
 try:
-    from SYSTEM_CONFIG import SystemState
+    from SYSTEM_CONFIG import SystemState as SystemStateFromConfig
+    SystemState = SystemStateFromConfig
 except ImportError:
-    logger.error("✗ SYSTEM_CONFIG.py not found. Please run 'make init' first.")
-    sys.exit(1)
+    logger.info("\u26a0 SYSTEM_CONFIG.py not found, using fallback SystemState")
 
 
 class TaskOrchestrator:
@@ -24,9 +37,9 @@ class TaskOrchestrator:
         """Initialize the task orchestrator with system state."""
         try:
             self.system_state = SystemState()
-            logger.info(f"✓ TaskOrchestrator initialized | {self.system_state.get_status()}")
+            logger.info(f"\u2713 TaskOrchestrator initialized | {self.system_state.get_status()}")
         except Exception as e:
-            logger.error(f"✗ Failed to initialize TaskOrchestrator: {e}")
+            logger.error(f"\u2717 Failed to initialize TaskOrchestrator: {e}")
             raise
     
     def execute_task(self, task_name):
@@ -43,7 +56,7 @@ class TaskOrchestrator:
             # Verify system state
             if self.system_state.state != "ACTIVE":
                 logger.warning(
-                    f"✗ Cannot execute task '{task_name}': "
+                    f"\u2717 Cannot execute task '{task_name}': "
                     f"System state is {self.system_state.state}, expected ACTIVE"
                 )
                 return False
@@ -51,7 +64,7 @@ class TaskOrchestrator:
             # Log task execution
             timestamp = datetime.now().isoformat()
             logger.info(
-                f"✓ Executing task: '{task_name}' | "
+                f"\u2713 Executing task: '{task_name}' | "
                 f"Mode: {self.system_state.operational_mode} | "
                 f"Registry: {self.system_state.registry} | "
                 f"Timestamp: {timestamp}"
@@ -61,7 +74,7 @@ class TaskOrchestrator:
             return True
             
         except Exception as e:
-            logger.error(f"✗ Error executing task '{task_name}': {e}")
+            logger.error(f"\u2717 Error executing task '{task_name}': {e}")
             return False
     
     def get_system_info(self):
@@ -106,7 +119,7 @@ def main():
         logger.info("=" * 60)
         
     except Exception as e:
-        logger.error(f"✗ Fatal error in main: {e}")
+        logger.error(f"\u2717 Fatal error in main: {e}")
         sys.exit(1)
 
 

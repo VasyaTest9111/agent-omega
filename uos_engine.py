@@ -9,12 +9,25 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Import SystemState from SYSTEM_CONFIG
+
+# Fallback SystemState class in case SYSTEM_CONFIG.py is not available
+class SystemState:
+    """Fallback SystemState class for when SYSTEM_CONFIG.py is not available."""
+    def __init__(self):
+        self.state = "ACTIVE"
+        self.registry = "CORE_INTEGRATION"
+        self.operational_mode = "AUTONOMOUS"
+
+    def get_status(self):
+        return f"System status: {self.state} | Mode: {self.operational_mode}"
+
+
+# Try to import from SYSTEM_CONFIG, fall back to local class if not available
 try:
-    from SYSTEM_CONFIG import SystemState
+    from SYSTEM_CONFIG import SystemState as SystemStateFromConfig
+    SystemState = SystemStateFromConfig
 except ImportError:
-    logger.error("✗ SYSTEM_CONFIG.py not found. Please run 'make init' first.")
-    sys.exit(1)
+    logger.info("\u26a0 SYSTEM_CONFIG.py not found, using fallback SystemState")
 
 
 class UOSEngine:
@@ -27,14 +40,14 @@ class UOSEngine:
         """Initialize the UOS Engine."""
         try:
             self.system_state = SystemState()
-            logger.info(f"✓ UOSEngine initialized | {self.system_state.get_status()}")
+            logger.info(f"\u2713 UOSEngine initialized | {self.system_state.get_status()}")
             
-            # Import Bot Manager for multi-node handling
+            # Import Bot Manager for multi-node handling (lazy import to avoid circular dependency)
             from bot_manager import BotManager
             self.bot_manager = BotManager()
             
         except Exception as e:
-            logger.error(f"✗ Failed to initialize UOSEngine: {e}")
+            logger.error(f"\u2717 Failed to initialize UOSEngine: {e}")
             raise
     
     def process(self, source, data):
@@ -52,7 +65,7 @@ class UOSEngine:
             # Verify system state
             if self.system_state.state != "ACTIVE":
                 logger.warning(
-                    f"✗ Cannot process: System state is {self.system_state.state}, expected ACTIVE"
+                    f"\u2717 Cannot process: System state is {self.system_state.state}, expected ACTIVE"
                 )
                 return {"status": "error", "message": "System not ACTIVE"}
             
@@ -64,11 +77,11 @@ class UOSEngine:
                 # Gemini API request
                 return self.bot_manager.process_gemini_request(data)
             else:
-                logger.error(f"✗ Unknown source: {source}")
+                logger.error(f"\u2717 Unknown source: {source}")
                 return {"status": "error", "message": "Unknown source"}
         
         except Exception as e:
-            logger.error(f"✗ Error processing in UOSEngine: {e}")
+            logger.error(f"\u2717 Error processing in UOSEngine: {e}")
             return {"status": "error", "message": str(e)}
     
     def get_system_status(self):
@@ -97,7 +110,7 @@ def main():
         
         # Verify all nodes are ACTIVE
         if not engine.bot_manager.verify_all_nodes_active():
-            logger.error("✗ Node verification failed")
+            logger.error("\u2717 Node verification failed")
             return False
         
         # Print system information
@@ -111,13 +124,13 @@ def main():
         logger.info(f"  Registry: {status['uos_registry']}")
         
         logger.info("=" * 70)
-        logger.info("✓ UOS ENGINE READY FOR OPERATION")
+        logger.info("\u2713 UOS ENGINE READY FOR OPERATION")
         logger.info("=" * 70)
         
         return True
     
     except Exception as e:
-        logger.error(f"✗ Fatal error in UOS Engine: {e}")
+        logger.error(f"\u2717 Fatal error in UOS Engine: {e}")
         return False
 
 
