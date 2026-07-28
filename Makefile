@@ -1,4 +1,4 @@
-.PHONY: init run clean help lint test setup engine bot-test
+.PHONY: init run clean help lint test setup engine bot-test bot
 
 # Variables
 PYTHON := python3
@@ -22,10 +22,12 @@ help:
 
 setup:
 	@echo "📦 Setting up UOS-Core environment..."
-	@$(PIP) install python-dotenv
-	@$(PIP) install python-telegram-bot
-	@$(PIP) install google-generativeai
+	@$(PIP) install python-dotenv python-telegram-bot google-generativeai requests
 	@echo "✓ Dependencies installed"
+
+bot:
+	@echo "🤖 Starting Telegram Bot with Gemini + GitHub..."
+	@$(PYTHON) telegram_bot.py
 
 init:
 	@echo "🔧 Initializing system configuration..."
