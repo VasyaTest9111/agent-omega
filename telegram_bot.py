@@ -1,5 +1,8 @@
 import os
+import time
 import logging
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -12,9 +15,41 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 GITHUB_OWNER = os.getenv("OWNER_M", "VasyaTest9111")
+GITHUB_CONTEXT_TTL_SECONDS = 300  # re-fetch repo summary at most every 5 minutes per chat
+HISTORY_TURNS = 6  # how many past exchanges to keep per chat
 
 github = GitHubClient()
 gemini = GeminiClient()
+
+
+@dataclass
+class ChatSession:
+    """Per-chat memory so GitHub context and conversation history survive between messages."""
+    github_context: Optional[str] = None
+    github_context_fetched_at: float = 0.0
+    history: List[str] = field(default_factory=list)
+
+    def cached_github_context(self) -> Optional[str]:
+        if self.github_context and (time.time() - self.github_context_fetched_at) < GITHUB_CONTEXT_TTL_SECONDS:
+            return self.github_context
+        return None
+
+    def store_github_context(self, context: str):
+        self.github_context = context
+        self.github_context_fetched_at = time.time()
+
+    def add_turn(self, user_text: str, bot_text: str):
+        self.history.append(f"Користувач: {user_text}\nAgent Omega: {bot_text}")
+        self.history = self.history[-HISTORY_TURNS:]
+
+
+SESSIONS: Dict[int, ChatSession] = {}
+
+
+def get_session(chat_id: int) -> ChatSession:
+    if chat_id not in SESSIONS:
+        SESSIONS[chat_id] = ChatSession()
+    return SESSIONS[chat_id]
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -101,15 +136,18 @@ async def summary(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
+    session = get_session(update.effective_chat.id)
     await update.message.reply_text("🤖 Думаю...")
 
-    # Дай GitHub контекст якщо питання пов'язане з репо
-    github_context = None
+    # GitHub-контекст: береться зі свіжого кешу чату, якщо він є, інакше запитується заново
+    github_context = session.cached_github_context()
     keywords = ["репо", "repo", "гілк", "branch", "коміт", "commit", "pr", "issue", "код", "code", "github"]
-    if any(kw in user_text.lower() for kw in keywords):
+    if github_context is None and any(kw in user_text.lower() for kw in keywords):
         github_context = github.get_repo_summary(GITHUB_OWNER, "agent-omega")
+        session.store_github_context(github_context)
 
-    response = gemini.ask(user_text, github_context)
+    response = gemini.ask(user_text, github_context, history=session.history)
+    session.add_turn(user_text, response)
     await update.message.reply_text(response)
 
 

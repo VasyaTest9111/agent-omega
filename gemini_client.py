@@ -1,6 +1,6 @@
 import os
 import logging
-from typing import Optional
+from typing import List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -24,15 +24,19 @@ class GeminiClient:
             )
         return self._model
 
-    def ask(self, user_message: str, github_context: Optional[str] = None) -> str:
+    def ask(self, user_message: str, github_context: Optional[str] = None, history: Optional[List[str]] = None) -> str:
         if not self.api_key:
             return "❌ GEMINI_API_KEY не встановлено"
 
         try:
             model = self._get_model()
-            prompt = user_message
+            parts = []
+            if history:
+                parts.append("Попередні репліки цього чату:\n" + "\n\n".join(history))
             if github_context:
-                prompt = f"Контекст GitHub:\n{github_context}\n\nЗапит: {user_message}"
+                parts.append(f"Контекст GitHub:\n{github_context}")
+            parts.append(f"Запит: {user_message}")
+            prompt = "\n\n".join(parts)
 
             response = model.generate_content(prompt)
             return response.text
