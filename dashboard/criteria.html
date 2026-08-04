@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Критерії аналізу — цілісність, розширеність та інше</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .cr { max-width: 880px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .cr h1 { font-size: 28px; margin: 0 0 8px; }
+    .cr .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .cr .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .cr .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .cr h2 { font-size: 18px; margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .cr .crit { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent); border-radius: 10px; padding: 15px 18px; margin-bottom: 12px; }
+    .cr .crit.exp { border-left-color: var(--vds-accent3); }
+    .cr .crit.oth { border-left-color: var(--vds-accent4); }
+    .cr .crit h3 { font-size: 15px; margin: 0 0 4px; color: var(--vds-text); }
+    .cr .crit .q { font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); }
+    .cr .crit p { font-size: 13px; color: var(--vds-muted); line-height: 1.5; margin: 6px 0 0; }
+    .cr .crit .m { display: block; margin-top: 6px; font-size: 12px; color: var(--vds-accent3); }
+    .cr table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    .cr th { text-align: left; font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); text-transform: uppercase; padding: 6px 10px; border-bottom: 1px solid var(--vds-border); }
+    .cr td { padding: 7px 10px; border-bottom: 1px solid var(--vds-border); color: var(--vds-muted); }
+    .cr .ok { color: var(--vds-accent4); } .cr .part { color: var(--vds-accent5); }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="cr">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Критерії аналізу</h1>
+    <div class="sub">// за чим оцінюється цілісність, розширеність та інші якості системи</div>
+
+    <div class="note">
+      Набір критеріїв, за якими можна аналізувати будь-яку інформаційно-структурну систему — зокрема цей сайт.
+      Кожен критерій має <b>питання</b> (що перевіряє) і <b>міру</b> (як вимірюється). Наприкінці — чесне
+      застосування до поточного стану сайту.
+    </div>
+
+    <h2>I · Цілісність (чи це єдине ціле?)</h2>
+    <div class="crit"><div class="q">Ц.01</div><h3>Зв'язність</h3><p>Кожна частина посилається на інші; немає ізольованих острівців.<span class="m">міра: частка частин, досяжних із будь-якої іншої</span></p></div>
+    <div class="crit"><div class="q">Ц.02</div><h3>Несуперечливість</h3><p>Частини не заперечують одна одну; спільні поняття вживаються однаково.<span class="m">міра: кількість виявлених суперечностей (ціль — 0)</span></p></div>
+    <div class="crit"><div class="q">Ц.03</div><h3>Замкненість шаблону</h3><p>Один мета-шаблон (ДНК+РНК+МЕЖІ) застосовний до всіх елементів без винятків.<span class="m">міра: частка елементів, що лягають у шаблон</span></p></div>
+    <div class="crit"><div class="q">Ц.04</div><h3>Повнота покриття</h3><p>Усі заявлені рівні/категорії присутні, немає прогалин.<span class="m">міра: зібрані категорії / усі заплановані</span></p></div>
+
+    <h2>II · Розширеність (чи може рости?)</h2>
+    <div class="crit exp"><div class="q">Р.01</div><h3>Модульність</h3><p>Нову частину можна додати, не переписуючи наявні.<span class="m">міра: зміни в старих файлах при додаванні нового (ціль — мінімум)</span></p></div>
+    <div class="crit exp"><div class="q">Р.02</div><h3>Масштабованість</h3><p>Структура витримує зростання кількості без втрати ясності.<span class="m">міра: чи лишається навігація зрозумілою при N частин</span></p></div>
+    <div class="crit exp"><div class="q">Р.03</div><h3>Відкритість</h3><p>Є явне місце для майбутніх категорій (шар 5, змінні тощо).<span class="m">міра: наявність запланованих, ще не заповнених слотів</span></p></div>
+    <div class="crit exp"><div class="q">Р.04</div><h3>Універсальність шаблону</h3><p>Мета-шаблон приймає нові домени без переробки.<span class="m">міра: скільки різних доменів уже лягли в один шаблон</span></p></div>
+
+    <h2>III · Інші якості (все-все інше)</h2>
+    <div class="crit oth"><div class="q">Я.01</div><h3>Істинність / верифікованість</h3><p>Твердження ґрунтовані й перевірювані; вигадка позначена як вигадка.<span class="m">міра: частка тверджень із джерелом або позначкою «лор»</span></p></div>
+    <div class="crit oth"><div class="q">Я.02</div><h3>Прозорість</h3><p>Внутрішній стан можна вивести в зрозумілій структурі (як цей індекс).<span class="m">міра: чи є повний індекс усіх частин</span></p></div>
+    <div class="crit oth"><div class="q">Я.03</div><h3>Відсутність змінних</h3><p>На цьому етапі — лише незмінні сутності, без прив'язки до назв і контексту.<span class="m">міра: частка сторінок без конкретних змінних</span></p></div>
+    <div class="crit oth"><div class="q">Я.04</div><h3>Оборотність</h3><p>Систему можна згорнути в точку й розгорнути назад без втрати.<span class="m">міра: наявність пари згортання↔розгортання (#sync ↔ unfold)</span></p></div>
+    <div class="crit oth"><div class="q">Я.05</div><h3>Самоподібність</h3><p>Той самий візерунок повторюється на різних масштабах.<span class="m">міра: чи діє мета-шаблон від атома до Всесвіту</span></p></div>
+    <div class="crit oth"><div class="q">Я.06</div><h3>Стійкість (ефемерність з якорем)</h3><p>Робота переживає завершення сесії через зовнішнє сховище.<span class="m">міра: чи все закомічено в репозиторій</span></p></div>
+
+    <h2>Застосування до поточного сайту</h2>
+    <table>
+      <tr><th>Критерій</th><th>Стан</th><th>Коментар</th></tr>
+      <tr><td>Зв'язність</td><td class="ok">сильно</td><td>усі 15 частин зібрані в тілі #sync, взаємні посилання.</td></tr>
+      <tr><td>Несуперечливість</td><td class="ok">сильно</td><td>спільний шаблон ДНК+РНК+МЕЖІ витриманий; вигадка відділена від фактів.</td></tr>
+      <tr><td>Повнота покриття</td><td class="part">частково</td><td>4 з 5 шарів Матриці зібрано; Свідомість — стисло, повну робимо разом.</td></tr>
+      <tr><td>Модульність / відкритість</td><td class="ok">сильно</td><td>нова сторінка додається одним записом у тіло 6-го виміру; слот для шару 5 і змінних відкритий.</td></tr>
+      <tr><td>Істинність</td><td class="ok">сильно</td><td>довідкові карти з джерел; концептуальні — позначені як лор.</td></tr>
+      <tr><td>Оборотність</td><td class="ok">сильно</td><td>#sync згортає ↔ unfold.html розгортає.</td></tr>
+      <tr><td>Стійкість</td><td class="ok">сильно</td><td>усе в main; кожна сторінка задеплоєна й перевірена в браузері.</td></tr>
+    </table>
+  </div>
+</body>
+</html>
