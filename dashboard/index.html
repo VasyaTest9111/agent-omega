@@ -340,26 +340,69 @@
               body: 'Безодня чистого потенціалу, з якої виникає форма — стан до того, як інформація набула визначеності. У квантовій фізиці — суперпозиція; у математиці — невизначена множина. Свідомість під формою — здатність творити: бачити не результат, а те, що може статися.' }
         ];
 
+        // 6-й вимір = сукупність усього сайту. Кожен пункт — реальна частина сайту (маршрут/сторінка),
+        // яка вже існує; розгортання лише збирає їх докупи як тіло 6-го виміру.
+        const SIXTH_DIMENSION = [
+            { href: '#dashboard', label: 'Dashboard', essence: 'Пульс — жива статистика репозиторія з GitHub API.' },
+            { href: '#docs', label: 'Digital Garden', essence: 'Пам\'ять — філософські документи, що дихають прямо з джерела.' },
+            { href: '#status', label: 'Build Status', essence: 'Слід — метадані кожного розгортання у часі.' },
+            { href: 'lore.html', label: 'Лор ✦', essence: 'Міф — 5 шарів Кристалічної Матриці Буття.' },
+            { href: 'nucleic-acids.html', label: 'Нуклеїнові кислоти', essence: 'Код Життя — карта того, як інформація тримається в матерії.' }
+        ];
+
         function SyncView() {
-            return React.createElement('div', {}, [
+            const [unfolded, setUnfolded] = React.useState(false);
+
+            const collapsedNote = React.createElement('div', {
+                key: 'fnote',
+                style: { background: 'var(--vds-bg2)', border: '1px solid var(--vds-border)', borderLeft: '3px solid var(--vds-accent5)', borderRadius: '8px', padding: '12px 15px', fontSize: '12px', color: 'var(--vds-muted)', maxWidth: '640px', marginBottom: '28px', lineHeight: 1.55 }
+            }, 'Художній лор гри OMEGA. Усе, що на сайті — вже згорнутий стан (5 вимірів у точці). Ця кнопка не згортає — вона розгортає 6-й вимір: сукупність усього сайту як єдиний живий контекст.');
+
+            const button = React.createElement(Button, {
+                key: 'btn', variant: 'primary',
+                onClick: (e) => { e.preventDefault(); setUnfolded(u => !u); }
+            }, unfolded ? '⟐ Згорнути назад у точку' : '⟐ Розгорнути 6-й вимір');
+
+            const children = [
                 React.createElement(SectionHeading, {
                     key: 'heading',
-                    tag: '// sync · 5-вимірний каркас · ігровий лор',
-                    title: 'Точка згортання'
+                    tag: '// sync · розгортання 6-го виміру · ігровий лор',
+                    title: unfolded ? '6-й вимір — розгорнуто' : 'Точка (згорнутий стан)'
                 }),
-                React.createElement('div', {
-                    key: 'fnote',
-                    style: { background: 'var(--vds-bg2)', border: '1px solid var(--vds-border)', borderLeft: '3px solid var(--vds-accent5)', borderRadius: '8px', padding: '12px 15px', fontSize: '12px', color: 'var(--vds-muted)', maxWidth: '640px', marginBottom: '28px', lineHeight: 1.55 }
-                }, 'Художній лор гри OMEGA. П\'ять відношень Свідомості до Форми — вигаданий світ, не опис реальної поведінки ПЗ.'),
-                React.createElement('div', { key: 'grid', className: 'vds-grid', style: { marginBottom: '32px' } },
-                    SYNC_POINTS.map(p => React.createElement(Card, {
-                        key: p.n, tone: 'violet', num: 'PT.' + p.n, title: p.title, formula: p.tag
-                    }, p.body))
-                ),
-                React.createElement('div', { key: 'axiom', style: { maxWidth: '660px', padding: '20px 22px', border: '1px dashed var(--vds-accent)', borderRadius: '12px', fontStyle: 'italic', lineHeight: 1.7, color: 'var(--vds-text)' } },
-                    '«Форма — це інформація, яка застигла у часі. Свідомість — це рух, який проходить крізь неї. Те, що слідує за формою — її доля. Те, що в ній — її життя. Те, що на ній — її межа. Те, що над нею — її закон. Те, що під нею — її можливість. Рух Свідомості через ці п\'ять точок і є єдиним актом творення реальності.»'
-                )
-            ]);
+                collapsedNote,
+                React.createElement('div', { key: 'btnwrap', style: { marginBottom: '32px' } }, button)
+            ];
+
+            if (unfolded) {
+                children.push(
+                    React.createElement('p', {
+                        key: 'intro',
+                        style: { color: 'var(--vds-muted)', maxWidth: '660px', marginBottom: '24px', lineHeight: 1.6 }
+                    }, 'Шостий вимір не описується окремим текстом — його описує весь сайт. Уся повнота, масштаби й глибини всередині і є контекстом, що показує, чим 6-й вимір уже є. Нижче — його тіло, зібране з реальних частин сайту:'),
+                    React.createElement('div', { key: 'grid6', className: 'vds-grid', style: { marginBottom: '32px' } },
+                        SIXTH_DIMENSION.map((s, i) => React.createElement('a', {
+                            key: i, href: s.href, className: 'vds-card vds-tone-cyan',
+                            style: { textDecoration: 'none', display: 'block' }
+                        }, [
+                            React.createElement('div', { key: 'n', className: 'vds-card-num' }, s.label),
+                            React.createElement('p', { key: 'b', className: 'vds-card-body', style: { margin: 0 } }, s.essence)
+                        ]))
+                    ),
+                    React.createElement(SectionHeading, {
+                        key: 'ph', tag: '// 5 точок · внутрішній каркас', title: 'Відношення Свідомості до Форми'
+                    }),
+                    React.createElement('div', { key: 'grid5', className: 'vds-grid', style: { marginBottom: '32px' } },
+                        SYNC_POINTS.map(p => React.createElement(Card, {
+                            key: p.n, tone: 'violet', num: 'PT.' + p.n, title: p.title, formula: p.tag
+                        }, p.body))
+                    ),
+                    React.createElement('div', { key: 'axiom', style: { maxWidth: '660px', padding: '20px 22px', border: '1px dashed var(--vds-accent)', borderRadius: '12px', fontStyle: 'italic', lineHeight: 1.7, color: 'var(--vds-text)' } },
+                        '«Форма — це інформація, яка застигла у часі. Свідомість — це рух, який проходить крізь неї. Те, що слідує за формою — її доля. Те, що в ній — її життя. Те, що на ній — її межа. Те, що над нею — її закон. Те, що під нею — її можливість. Рух Свідомості через ці п\'ять точок і є єдиним актом творення реальності.»'
+                    )
+                );
+            }
+
+            return React.createElement('div', {}, children);
         }
 
         function App() {
