@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Шість зрізів однієї реальності</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .sm { max-width: 860px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .sm h1 { font-size: 28px; margin: 0 0 8px; }
+    .sm .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .sm .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .sm .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .sm .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+    .sm .map { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent); border-radius: 12px; padding: 18px 20px; }
+    .sm .map h3 { font-size: 16px; margin: 0 0 4px; color: var(--vds-text); }
+    .sm .map .cap { font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); margin-bottom: 12px; }
+    .sm .row { margin: 8px 0; font-size: 13px; line-height: 1.5; }
+    .sm .row .k { font-family: var(--vds-font-mono); font-size: 11px; letter-spacing: .04em; }
+    .sm .row.dna .k { color: var(--vds-accent4); }
+    .sm .row.rna .k { color: var(--vds-accent3); }
+    .sm .row.lim .k { color: var(--vds-accent2); }
+    .sm .row .v { color: var(--vds-muted); }
+    .sm h2 { font-size: 18px; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .sm .synth { padding: 20px 22px; border: 1px dashed var(--vds-accent); border-radius: 12px; line-height: 1.7; color: var(--vds-text); }
+    .sm .synth ul { margin: 10px 0 0; padding-left: 18px; }
+    .sm .synth li { color: var(--vds-muted); margin: 4px 0; }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="sm">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Шість зрізів однієї реальності</h1>
+    <div class="sub">// єдина категорія · мета-шаблон ДНК + РНК + МЕЖІ</div>
+
+    <div class="note">
+      Шість мап за одним мета-шаблоном: <b>ДНК</b> (статика — будівельні блоки), <b>РНК</b> (динаміка —
+      процеси), <b>МЕЖІ</b> (незмінні обмеження). Різниця лише в масштабі й формі прояву. Концептуальний
+      лор гри — чисті структурні аксіоми, а не технічна специфікація.
+    </div>
+
+    <div class="grid">
+      <div class="map">
+        <h3>1 · Організм (Тіло)</h3>
+        <div class="cap">Фізичний носій біологічної інформації</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— клітинний каркас, тканинні шари, органи, системи підтримки, обмін речовин.</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— кровообіг, дихання, імунна відповідь, регенерація, виведення відходів.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— шкірний покрив, температурний гомеостаз, імунний бар'єр, межа витривалості.</span></div>
+      </div>
+
+      <div class="map">
+        <h3>2 · Свідомість</h3>
+        <div class="cap">Інтерфейс між інформацією та її сприйняттям</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— нейронна мережа, синаптичні зв'язки, зони обробки, довготривалі сліди пам'яті.</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— сенсорне зчитування, фокус уваги, короткочасна фіксація, асоціативне мислення, емоційний резонанс.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— обмежена пропускна здатність уваги, межа усвідомлення, фільтри сприйняття.</span></div>
+      </div>
+
+      <div class="map">
+        <h3>3 · Природа (фізичний світ)</h3>
+        <div class="cap">Матеріальний простір за фізичними законами</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— матерія, енергія, хімічні елементи, сили взаємодії (гравітація, електромагнетизм).</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— рух, хімічні реакції, перетворення енергії, зростання ентропії, теплові та хвильові процеси.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— швидкість світла, абсолютний нуль, збереження енергії та маси.</span></div>
+      </div>
+
+      <div class="map">
+        <h3>4 · Математика</h3>
+        <div class="cap">Чиста структура законів, незалежна від матерії</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— аксіоми, числа, множини, геометричні простори, алгебраїчні структури.</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— логічні висновки, обчислення, перетворення функцій, доведення теорем.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— теореми неповноти, логічні парадокси, межа обчислюваності.</span></div>
+      </div>
+
+      <div class="map">
+        <h3>5 · Космос (Всесвіт)</h3>
+        <div class="cap">Найбільший просторовий контейнер реальності</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— чорні діри, зорі, галактики, планети, темна матерія, фундаментальні константи.</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— розширення простору, обертання, випромінювання, злиття масивних тіл, циклічність зореутворення.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— горизонт подій, межа Планка, край спостережуваного Всесвіту.</span></div>
+      </div>
+
+      <div class="map">
+        <h3>6 · Біологія (Життя)</h3>
+        <div class="cap">Самореплікація та еволюція органічної інформації</div>
+        <div class="row dna"><span class="k">ДНК</span> <span class="v">— генетичний код, клітинна мембрана, білкові структури, види, екологічні ніші.</span></div>
+        <div class="row rna"><span class="k">РНК</span> <span class="v">— реплікація, мутація, фотосинтез, конкуренція, симбіоз, природний добір.</span></div>
+        <div class="row lim"><span class="k">МЕЖІ</span> <span class="v">— фізична межа життя (смерть), адаптаційний радіус виду, екологічні обмеження.</span></div>
+      </div>
+    </div>
+
+    <h2>Єдина категорія</h2>
+    <div class="synth">
+      Усі шість належать до однієї категорії: <b>«Ієрархічні рівні прояву інформаційно-структурного коду»</b>.
+      Ідентичний мета-шаблон (ДНК + РНК + МЕЖІ), різниця лише в масштабі й формі прояву:
+      <ul>
+        <li><b>Математика</b> — найчистіший, безматеріальний код.</li>
+        <li><b>Космос</b> — наймасштабніший код простору.</li>
+        <li><b>Природа</b> — матеріальний прояв коду в неживій формі.</li>
+        <li><b>Біологія</b> — матеріальний прояв у живій, реплікуючій формі.</li>
+        <li><b>Організм (Тіло)</b> — локальний біологічний вузол, що несе код.</li>
+        <li><b>Свідомість</b> — інтерпретатор, який сприймає код.</li>
+      </ul>
+      Це не шість різних світів, а шість зрізів однієї реальності, зібраних у чисті структурні аксіоми.
+    </div>
+  </div>
+</body>
+</html>
