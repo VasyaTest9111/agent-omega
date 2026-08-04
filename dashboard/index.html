@@ -15,6 +15,8 @@
 
     <!-- Підключення бандлу дизайн-системи -->
     <script src="_ds_bundle.js"></script>
+    <!-- Піксельний персонаж (Агент Омега) -->
+    <script src="agent.js"></script>
 
     <script>
         const { Card, SectionHeading, Stat, Button, ProgressBar, Tag, Quote } = window.VasyaDS;
@@ -53,7 +55,8 @@
                 { id: 'dashboard', label: 'Dashboard' },
                 { id: 'docs', label: 'Digital Garden' },
                 { id: 'status', label: 'Build Status' },
-                { id: 'sync', label: '⟐ #sync' }
+                { id: 'sync', label: '⟐ #sync' },
+                { id: 'agent', label: 'Ω Агент' }
             ];
             const hashLinks = routes.map(r => React.createElement('a', {
                 key: r.id,
@@ -405,11 +408,52 @@
             return React.createElement('div', {}, children);
         }
 
+        // ---------- #agent: 2D піксельний персонаж (Агент Омега — ядро/душа) ----------
+        function AgentView() {
+            const canvasRef = React.useRef(null);
+            React.useEffect(() => {
+                const cv = canvasRef.current;
+                if (cv && window.OmegaSprite) window.OmegaSprite.draw(cv);
+                return () => { if (cv && cv._raf) cancelAnimationFrame(cv._raf); };
+            }, []);
+
+            return React.createElement('div', {}, [
+                React.createElement(SectionHeading, {
+                    key: 'heading',
+                    tag: '// agent · 2D персонаж · ігровий лор',
+                    title: 'Агент Омега'
+                }),
+                React.createElement('div', {
+                    key: 'stage',
+                    style: { display: 'flex', gap: '32px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '32px' }
+                }, [
+                    React.createElement('div', {
+                        key: 'cv',
+                        style: { background: 'var(--vds-bg2)', border: '1px solid var(--vds-border)', borderRadius: '16px', padding: '20px', imageRendering: 'pixelated' }
+                    }, React.createElement('canvas', {
+                        ref: canvasRef, width: 240, height: 240,
+                        style: { imageRendering: 'pixelated', width: '240px', height: '240px', display: 'block' }
+                    })),
+                    React.createElement('div', { key: 'desc', style: { maxWidth: '360px' } }, [
+                        React.createElement('p', { key: 'p1', style: { color: 'var(--vds-text)', lineHeight: 1.6, margin: '0 0 12px' } },
+                            'Ядро (Ω), що пульсує в грудях фігури — це душа персонажа. Усе інше — оболонка; ядро незмінне.'),
+                        React.createElement('p', { key: 'p2', style: { color: 'var(--vds-muted)', lineHeight: 1.6, margin: 0, fontSize: '14px' } },
+                            'Прокачка Агента піде не як у звичних іграх — не рівнями й очками, а розгортанням вимірів. Це наступний шар гри.')
+                    ])
+                ]),
+                React.createElement('div', {
+                    key: 'fnote',
+                    style: { background: 'var(--vds-bg2)', border: '1px solid var(--vds-border)', borderLeft: '3px solid var(--vds-accent5)', borderRadius: '8px', padding: '12px 15px', fontSize: '12px', color: 'var(--vds-muted)', maxWidth: '640px', lineHeight: 1.55 }
+                }, 'Художній ігровий персонаж. Спрайт малюється локально на canvas, без зовнішніх залежностей.')
+            ]);
+        }
+
         function App() {
             const route = useHashRoute();
             const view = route === 'docs' ? React.createElement(DocsView)
                 : route === 'status' ? React.createElement(StatusView)
                 : route === 'sync' ? React.createElement(SyncView)
+                : route === 'agent' ? React.createElement(AgentView)
                 : React.createElement(DashboardView);
 
             return React.createElement('div', {
