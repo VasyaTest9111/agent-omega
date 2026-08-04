@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Універсальний інвентар — інструменти та закони</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .in { max-width: 860px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .in h1 { font-size: 28px; margin: 0 0 8px; }
+    .in .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .in .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .in .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .in h2 { font-size: 18px; margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .in .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(370px, 1fr)); gap: 14px; }
+    .in .card { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent3); border-radius: 10px; padding: 15px 18px; }
+    .in .card.law { border-left-color: var(--vds-accent2); }
+    .in .card .code { font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); }
+    .in .card h3 { font-size: 15px; margin: 4px 0 6px; color: var(--vds-text); }
+    .in .card p { font-size: 13px; color: var(--vds-muted); line-height: 1.5; margin: 0; }
+    .in .card .ex { display: block; margin-top: 6px; font-size: 12px; color: var(--vds-accent3); }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="in">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Універсальний інвентар</h1>
+    <div class="sub">// інструменти та закони, спільні для всіх сфер і шарів</div>
+
+    <div class="note">
+      Що випливає зі всіх мап: <b>інструменти</b> — операції, які повторюються на кожному рівні реальності;
+      <b>закони</b> — незмінні обмеження, що діють скрізь. Це інвентар без змінних. Наступний крок (за твоїм
+      планом) — вже зі змінними, коли інвентар повний.
+    </div>
+
+    <h2>Частина I · Універсальні інструменти (операції)</h2>
+    <div class="grid">
+      <div class="card"><div class="code">INS.01</div><h3>Кодування</h3><p>Подання стану як структури: інформація фіксується в носії.<span class="ex">ДНК, токени, числа, квантові стани</span></p></div>
+      <div class="card"><div class="code">INS.02</div><h3>Оператор перетворення</h3><p>Застосування дії до стану — лінійної чи нелінійної.<span class="ex">хімічна реакція, обчислення, сила</span></p></div>
+      <div class="card"><div class="code">INS.03</div><h3>Композиція</h3><p>З'єднання одиниць у ланцюги та ієрархії — послідовно чи паралельно.<span class="ex">молекули, шари мережі, галактики</span></p></div>
+      <div class="card"><div class="code">INS.04</div><h3>Реплікація</h3><p>Відтворення структури — копіювання коду в новий екземпляр.<span class="ex">поділ клітини, зореутворення, копія стану</span></p></div>
+      <div class="card"><div class="code">INS.05</div><h3>Селекція</h3><p>Вибір одного варіанта з набору можливих — детермінований чи стохастичний.<span class="ex">природний добір, стратегія вибору, вимір</span></p></div>
+      <div class="card"><div class="code">INS.06</div><h3>Зворотний зв'язок</h3><p>Порівняння результату з ціллю й коригування на основі різниці.<span class="ex">гомеостаз, адаптація пам'яті, регуляція</span></p></div>
+      <div class="card"><div class="code">INS.07</div><h3>Зчитування / пам'ять</h3><p>Доступ до збереженого стану для доповнення поточного.<span class="ex">геном, зовнішнє сховище, спогад</span></p></div>
+      <div class="card"><div class="code">INS.08</div><h3>Інтерфейс / межа</h3><p>Поверхня контакту між внутрішнім і зовнішнім, де йде обмін.<span class="ex">мембрана, шкіра, контур доступу</span></p></div>
+    </div>
+
+    <h2>Частина II · Універсальні закони (незмінні обмеження)</h2>
+    <div class="grid">
+      <div class="card law"><div class="code">LEX.01</div><h3>Закон збереження</h3><p>За будь-якої зміни щось лишається інваріантним (теорема Ньотер: симетрія → збереження).<span class="ex">енергія, заряд, аксіома</span></p></div>
+      <div class="card law"><div class="code">LEX.02</div><h3>Закон симетрії</h3><p>Інваріантність щодо перетворення; порушення симетрії породжує структуру.<span class="ex">калібрувальна симетрія, рівновага</span></p></div>
+      <div class="card law"><div class="code">LEX.03</div><h3>Закон ентропії</h3><p>Невизначеність / безлад прагне зростати; будь-яка визначеність має ціну.<span class="ex">термодинаміка, ентропія Шеннона</span></p></div>
+      <div class="card law"><div class="code">LEX.04</div><h3>Закон емерджентності</h3><p>Вищий порядок виникає із взаємодії нижчих елементів — і не зводиться до них.<span class="ex">життя з хімії, свідомість із нейронів</span></p></div>
+      <div class="card law"><div class="code">LEX.05</div><h3>Закон причинності</h3><p>Форма породжує свій наслідок; потік має напрям і порядок.<span class="ex">детермінований каскад, стріла часу</span></p></div>
+      <div class="card law"><div class="code">LEX.06</div><h3>Закон рекурсії</h3><p>Структури, що посилаються на себе й відтворюють себе — з фундаментальними межами.<span class="ex">самореплікація, теореми неповноти</span></p></div>
+      <div class="card law"><div class="code">LEX.07</div><h3>Закон межі взаємодії</h3><p>Кожна система має фіксований контур доступу; запит за межу, якщо не дозволений, не виконується.<span class="ex">горизонт подій, імунний бар'єр, контур доступу</span></p></div>
+      <div class="card law"><div class="code">LEX.08</div><h3>Закон ефемерності</h3><p>Кожен екземпляр обмежений у часі; тривалість вимагає зовнішнього якоря.<span class="ex">смерть, сесія, збережений стан</span></p></div>
+    </div>
+  </div>
+</body>
+</html>
