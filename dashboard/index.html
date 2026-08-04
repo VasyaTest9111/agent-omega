@@ -52,7 +52,8 @@
             const routes = [
                 { id: 'dashboard', label: 'Dashboard' },
                 { id: 'docs', label: 'Digital Garden' },
-                { id: 'status', label: 'Build Status' }
+                { id: 'status', label: 'Build Status' },
+                { id: 'sync', label: '⟐ #sync' }
             ];
             const hashLinks = routes.map(r => React.createElement('a', {
                 key: r.id,
@@ -325,10 +326,47 @@
             ]);
         }
 
+        // ---------- #sync: 5-вимірний каркас (ігровий лор — відношення до Форми) ----------
+        const SYNC_POINTS = [
+            { n: '01', tag: 'Наслідок', title: 'Що слідує формі',
+              body: 'Прояв лінійного часу та причинності. Форма має детерміноване відлуння: щойно вона створена — неминуче породжує продовження, іншу форму з її розпаду чи трансформації. Не «майбутнє», а чиста механіка: з форми випливає її зміна.' },
+            { n: '02', tag: 'Внутрішнє ядро', title: 'Свідомість у формі',
+              body: 'Життя, біологія, саморефлексія. Свідомість усередині форми стає самовідтворюваним резонатором — форма (клітина, алгоритм) починає «відчувати» власні межі. Не просто існування, а внутрішнє сприйняття свого існування.' },
+            { n: '03', tag: 'Поверхня та межі', title: 'На формі',
+              body: 'Контакт, інтерфейс, видимість. «Шкіра» форми, де відбувається обмін енергією та інформацією. Свідомість на формі — усвідомлення власних кордонів і фіксація точок дотику до інших форм. Поверхня реальності, яку звемо «матерією».' },
+            { n: '04', tag: 'Трансцендентність та Закон', title: 'Над формою',
+              body: 'Мета-рівень. Те, що над формою, не є більшою формою — це чистий закон (аксіома, принцип симетрії, закон збереження). Свідомість над формою — здатність бачити структуру структур, піднявшись над формою до рівня незмінних сутей.' },
+            { n: '05', tag: 'Першоджерело та Потенціал', title: 'З-під форми',
+              body: 'Безодня чистого потенціалу, з якої виникає форма — стан до того, як інформація набула визначеності. У квантовій фізиці — суперпозиція; у математиці — невизначена множина. Свідомість під формою — здатність творити: бачити не результат, а те, що може статися.' }
+        ];
+
+        function SyncView() {
+            return React.createElement('div', {}, [
+                React.createElement(SectionHeading, {
+                    key: 'heading',
+                    tag: '// sync · 5-вимірний каркас · ігровий лор',
+                    title: 'Точка згортання'
+                }),
+                React.createElement('div', {
+                    key: 'fnote',
+                    style: { background: 'var(--vds-bg2)', border: '1px solid var(--vds-border)', borderLeft: '3px solid var(--vds-accent5)', borderRadius: '8px', padding: '12px 15px', fontSize: '12px', color: 'var(--vds-muted)', maxWidth: '640px', marginBottom: '28px', lineHeight: 1.55 }
+                }, 'Художній лор гри OMEGA. П\'ять відношень Свідомості до Форми — вигаданий світ, не опис реальної поведінки ПЗ.'),
+                React.createElement('div', { key: 'grid', className: 'vds-grid', style: { marginBottom: '32px' } },
+                    SYNC_POINTS.map(p => React.createElement(Card, {
+                        key: p.n, tone: 'violet', num: 'PT.' + p.n, title: p.title, formula: p.tag
+                    }, p.body))
+                ),
+                React.createElement('div', { key: 'axiom', style: { maxWidth: '660px', padding: '20px 22px', border: '1px dashed var(--vds-accent)', borderRadius: '12px', fontStyle: 'italic', lineHeight: 1.7, color: 'var(--vds-text)' } },
+                    '«Форма — це інформація, яка застигла у часі. Свідомість — це рух, який проходить крізь неї. Те, що слідує за формою — її доля. Те, що в ній — її життя. Те, що на ній — її межа. Те, що над нею — її закон. Те, що під нею — її можливість. Рух Свідомості через ці п\'ять точок і є єдиним актом творення реальності.»'
+                )
+            ]);
+        }
+
         function App() {
             const route = useHashRoute();
             const view = route === 'docs' ? React.createElement(DocsView)
                 : route === 'status' ? React.createElement(StatusView)
+                : route === 'sync' ? React.createElement(SyncView)
                 : React.createElement(DashboardView);
 
             return React.createElement('div', {
