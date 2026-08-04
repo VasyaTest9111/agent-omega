@@ -19,7 +19,58 @@
     <script>
         const { Card, SectionHeading, Stat, Button, ProgressBar, Tag, Quote } = window.VasyaDS;
 
-        function RuleWriterApp() {
+        // Довідкові дані про philosophy-документи репозиторія — джерела перевірені
+        // (заголовки й зв'язки взяті з git-історії/тексту файлів, не вигадані).
+        const DOCS = [
+            { id: 'agent-omega', file: 'AGENT_OMEGA_v1.0.md', title: 'AGENT OMEGA v1.0', note: 'Початковий реліз — когнітивна ОС для мислення.' },
+            { id: 'vasya-core', file: 'VASYA_CORE_v4.0.md', title: 'VASYA CORE v4.0', note: 'Когнітивний фреймворк, представлений тим самим initial-release комітом, що й Agent Omega v1.0.' },
+            { id: 'semantic-core', file: 'SEMANTIC_CORE_v5.0.md', title: 'SEMANTIC CORE v5.0', note: 'За повідомленням коміту — пряма еволюція VASYA CORE v4.0.' },
+            { id: 'philosophy', file: 'docs/PHILOSOPHY.md', title: 'Why OMEGA Has No Analogs', note: 'Текстово посилається на LUN-Effect.' },
+            { id: 'lun-effect', file: 'docs/LUN_EFFECT.md', title: 'The LUN-Effect', note: 'Чому більшість AI-агентів зазнають невдачі.' }
+        ];
+
+        const EDGES = [
+            { from: 'vasya-core', to: 'semantic-core', label: 'еволюція (commit: "evolution of VASYA_CORE v4.0")' },
+            { from: 'agent-omega', to: 'vasya-core', label: 'спільний реліз (той самий initial-release коміт)' },
+            { from: 'philosophy', to: 'lun-effect', label: 'текстове посилання ("LUN-Effect")' }
+        ];
+
+        const REPO_RAW_BASE = 'https://raw.githubusercontent.com/VasyaTest9111/agent-omega/main/';
+        const REPO_BLOB_BASE = 'https://github.com/VasyaTest9111/agent-omega/blob/main/';
+
+        function useHashRoute() {
+            const [hash, setHash] = React.useState(() => window.location.hash.replace('#', '') || 'dashboard');
+            React.useEffect(() => {
+                const onHashChange = () => setHash(window.location.hash.replace('#', '') || 'dashboard');
+                window.addEventListener('hashchange', onHashChange);
+                return () => window.removeEventListener('hashchange', onHashChange);
+            }, []);
+            return hash;
+        }
+
+        function NavBar({ current }) {
+            const routes = [
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'docs', label: 'Digital Garden' },
+                { id: 'status', label: 'Build Status' }
+            ];
+            return React.createElement('div', {
+                style: { display: 'flex', gap: '10px', marginBottom: '32px', flexWrap: 'wrap' }
+            }, routes.map(r => React.createElement('a', {
+                key: r.id,
+                href: '#' + r.id,
+                className: 'vds-tag',
+                style: {
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    borderColor: current === r.id ? 'var(--vds-accent)' : 'var(--vds-border)',
+                    color: current === r.id ? 'var(--vds-text)' : 'var(--vds-muted)'
+                }
+            }, r.label)));
+        }
+
+        // ---------- Dashboard view: реальний виклик GitHub API, без вигаданих ефектів ----------
+        function DashboardView() {
             const [status, setStatus] = React.useState('idle'); // idle | loading | done | error
             const [repoData, setRepoData] = React.useState(null);
             const [errorMsg, setErrorMsg] = React.useState('');
@@ -53,24 +104,13 @@
                 }
             }
 
-            return React.createElement('div', {
-                style: {
-                    background: 'var(--vds-bg)',
-                    color: 'var(--vds-text)',
-                    fontFamily: 'var(--vds-font-body)',
-                    minHeight: '100vh',
-                    padding: '48px 24px',
-                    boxSizing: 'border-box'
-                }
-            }, [
-                // Заголовок секції
+            return React.createElement('div', {}, [
                 React.createElement(SectionHeading, {
                     key: 'heading',
                     tag: '// phase 4 · active system',
                     title: 'VASYA — Rule Writer'
                 }),
 
-                // Блок статистики — реальні дані з GitHub API після натискання кнопки, інакше прочерк
                 React.createElement('div', {
                     key: 'stats',
                     style: { display: 'flex', gap: '44px', marginBottom: '40px', flexWrap: 'wrap' }
@@ -92,7 +132,6 @@
                     })
                 ]),
 
-                // Прогрес — відображає реальний стан fetch-запиту, не вигадану метрику
                 status !== 'idle' && React.createElement('div', { key: 'progress', style: { marginBottom: '40px', maxWidth: '600px' } }, [
                     React.createElement(ProgressBar, {
                         percent: status === 'loading' ? 50 : status === 'done' ? 100 : 100,
@@ -103,7 +142,6 @@
                     })
                 ]),
 
-                // Сітка компонентів (Core Traits & Abilities)
                 React.createElement('div', { key: 'grid', className: 'vds-grid', style: { marginBottom: '48px' } }, [
                     React.createElement(Card, {
                         key: 'c1',
@@ -130,14 +168,12 @@
                     }, 'Спостерігач всередині системи, що редагує правила, не порушуючи процес.')
                 ]),
 
-                // Цитата — коротке формулювання призначення панелі
                 React.createElement('div', { key: 'quote', style: { marginBottom: '40px', maxWidth: '600px' } },
                     React.createElement(Quote, {},
                         'Правило стає системою лише після того, як його перевірили — а не після того, як його красиво сформулювали.'
                     )
                 ),
 
-                // Кнопка — реальний виклик GitHub API, без вигаданих ефектів
                 React.createElement(Button, {
                     key: 'btn',
                     variant: 'primary',
@@ -146,9 +182,164 @@
             ]);
         }
 
-        // Монтування в ізольований вузол
+        // ---------- Digital Garden view: граф на основі реальних doc-файлів репозиторію ----------
+        function DocCard({ doc, excerpt, excerptState }) {
+            return React.createElement(Card, {
+                tone: 'cyan',
+                num: doc.file,
+                title: doc.title,
+                formula: null
+            }, [
+                React.createElement('p', { key: 'note', style: { margin: '0 0 10px' } }, doc.note),
+                React.createElement('p', {
+                    key: 'excerpt',
+                    style: { margin: '0 0 10px', fontStyle: excerptState === 'error' ? 'italic' : 'normal', opacity: excerptState === 'loading' ? 0.6 : 1 }
+                }, excerptState === 'loading' ? 'Завантаження уривку з raw.githubusercontent.com...'
+                    : excerptState === 'error' ? '(не вдалося завантажити живий уривок — показано лише збережений опис)'
+                    : excerpt),
+                React.createElement('a', {
+                    key: 'link',
+                    href: REPO_BLOB_BASE + doc.file,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    style: { fontFamily: 'var(--vds-font-mono)', fontSize: '12px', color: 'var(--vds-accent3)' }
+                }, 'Відкрити на GitHub →')
+            ]);
+        }
+
+        function DocsView() {
+            const [excerpts, setExcerpts] = React.useState({});   // id -> text
+            const [excerptStates, setExcerptStates] = React.useState({}); // id -> loading|done|error
+
+            React.useEffect(() => {
+                DOCS.forEach(doc => {
+                    setExcerptStates(s => ({ ...s, [doc.id]: 'loading' }));
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    fetch(REPO_RAW_BASE + doc.file, { signal: controller.signal })
+                        .then(res => {
+                            clearTimeout(timeoutId);
+                            if (!res.ok) throw new Error('HTTP ' + res.status);
+                            return res.text();
+                        })
+                        .then(text => {
+                            const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+                            const bodyLines = lines.filter(l => !l.startsWith('#'));
+                            const firstPara = (bodyLines[0] || '').slice(0, 220);
+                            setExcerpts(s => ({ ...s, [doc.id]: firstPara || '(документ без основного тексту)' }));
+                            setExcerptStates(s => ({ ...s, [doc.id]: 'done' }));
+                        })
+                        .catch(() => {
+                            setExcerptStates(s => ({ ...s, [doc.id]: 'error' }));
+                        });
+                });
+            }, []);
+
+            return React.createElement('div', {}, [
+                React.createElement(SectionHeading, {
+                    key: 'heading',
+                    tag: '// digital garden · live from repo',
+                    title: 'Карта філософських документів'
+                }),
+                React.createElement('p', {
+                    key: 'intro',
+                    style: { color: 'var(--vds-muted)', maxWidth: '640px', marginBottom: '32px' }
+                }, 'Уривки нижче тягнуться напряму з raw.githubusercontent.com при завантаженні сторінки. Якщо запит не пройде (мережа/CORS), картка покаже збережений опис замість вигаданого тексту.'),
+
+                React.createElement('div', { key: 'grid', className: 'vds-grid', style: { marginBottom: '40px' } },
+                    DOCS.map(doc => React.createElement(DocCard, {
+                        key: doc.id,
+                        doc,
+                        excerpt: excerpts[doc.id],
+                        excerptState: excerptStates[doc.id] || 'loading'
+                    }))
+                ),
+
+                React.createElement(SectionHeading, {
+                    key: 'edges-heading',
+                    tag: '// перевірені зв\'язки',
+                    title: 'Зв\'язки між документами'
+                }),
+                React.createElement('div', { key: 'edges', style: { display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '640px' } },
+                    EDGES.map((e, i) => {
+                        const from = DOCS.find(d => d.id === e.from);
+                        const to = DOCS.find(d => d.id === e.to);
+                        return React.createElement('div', {
+                            key: i,
+                            style: { fontFamily: 'var(--vds-font-mono)', fontSize: '13px', color: 'var(--vds-text)' }
+                        }, [
+                            React.createElement('span', { key: 'a' }, from.title),
+                            React.createElement('span', { key: 'arrow', style: { color: 'var(--vds-accent)', margin: '0 8px' } }, '→'),
+                            React.createElement('span', { key: 'b' }, to.title),
+                            React.createElement('span', { key: 'label', style: { color: 'var(--vds-muted)', marginLeft: '8px' } }, '(' + e.label + ')')
+                        ]);
+                    })
+                )
+            ]);
+        }
+
+        // ---------- Build Status view: реальні метадані останнього деплою (CI-згенеровані, не вигадані) ----------
+        function StatusView() {
+            const [state, setState] = React.useState('loading'); // loading | done | error
+            const [data, setData] = React.useState(null);
+
+            React.useEffect(() => {
+                fetch('./status.json', { cache: 'no-store' })
+                    .then(res => {
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        return res.json();
+                    })
+                    .then(json => { setData(json); setState('done'); })
+                    .catch(() => setState('error'));
+            }, []);
+
+            return React.createElement('div', {}, [
+                React.createElement(SectionHeading, {
+                    key: 'heading',
+                    tag: '// build status · generated by pages.yml',
+                    title: 'Останній деплой'
+                }),
+                React.createElement('p', {
+                    key: 'note',
+                    style: { color: 'var(--vds-muted)', maxWidth: '640px', marginBottom: '24px' }
+                }, 'Це метадані останнього GitHub Actions деплою (SHA, номер запуску, час), а не показник "живого" процесу — файл status.json перегенеровується лише при кожному пуші в dashboard/.'),
+
+                state === 'loading' && React.createElement('p', { key: 'l' }, 'Завантаження status.json...'),
+                state === 'error' && React.createElement('p', { key: 'e' }, 'status.json ще не згенеровано — з\'явиться після наступного деплою pages.yml.'),
+                state === 'done' && React.createElement('div', {
+                    key: 'stats',
+                    style: { display: 'flex', gap: '44px', flexWrap: 'wrap' }
+                }, [
+                    React.createElement(Stat, { key: 's1', numeral: data.commit, label: 'Commit SHA' }),
+                    React.createElement(Stat, { key: 's2', numeral: '#' + data.run_number, label: 'Workflow run' }),
+                    React.createElement(Stat, { key: 's3', numeral: data.deployed_at, label: 'Задеплоєно (UTC)' })
+                ])
+            ]);
+        }
+
+        function App() {
+            const route = useHashRoute();
+            const view = route === 'docs' ? React.createElement(DocsView)
+                : route === 'status' ? React.createElement(StatusView)
+                : React.createElement(DashboardView);
+
+            return React.createElement('div', {
+                style: {
+                    background: 'var(--vds-bg)',
+                    color: 'var(--vds-text)',
+                    fontFamily: 'var(--vds-font-body)',
+                    minHeight: '100vh',
+                    padding: '48px 24px',
+                    boxSizing: 'border-box'
+                }
+            }, [
+                React.createElement(NavBar, { key: 'nav', current: route }),
+                view
+            ]);
+        }
+
         ReactDOM.createRoot(document.getElementById('ds-root')).render(
-            React.createElement(RuleWriterApp)
+            React.createElement(App)
         );
     </script>
 </body>
