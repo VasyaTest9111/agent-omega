@@ -20,6 +20,39 @@
         const { Card, SectionHeading, Stat, Button, ProgressBar, Tag, Quote } = window.VasyaDS;
 
         function RuleWriterApp() {
+            const [status, setStatus] = React.useState('idle'); // idle | loading | done | error
+            const [repoData, setRepoData] = React.useState(null);
+            const [errorMsg, setErrorMsg] = React.useState('');
+
+            async function fetchRealGithubData() {
+                if (status === 'loading') return;
+                setStatus('loading');
+                setErrorMsg('');
+                try {
+                    const [repoRes, commitsRes] = await Promise.all([
+                        fetch('https://api.github.com/repos/VasyaTest9111/agent-omega'),
+                        fetch('https://api.github.com/repos/VasyaTest9111/agent-omega/commits?per_page=1')
+                    ]);
+                    if (!repoRes.ok || !commitsRes.ok) {
+                        throw new Error(`GitHub API: ${repoRes.status} / ${commitsRes.status}`);
+                    }
+                    const repo = await repoRes.json();
+                    const commits = await commitsRes.json();
+                    const lastCommit = commits[0];
+                    setRepoData({
+                        stars: repo.stargazers_count,
+                        openIssues: repo.open_issues_count,
+                        commitMessage: lastCommit.commit.message.split('\n')[0],
+                        commitDate: lastCommit.commit.author.date.slice(0, 10),
+                        commitAuthor: lastCommit.commit.author.name
+                    });
+                    setStatus('done');
+                } catch (e) {
+                    setErrorMsg(e.message);
+                    setStatus('error');
+                }
+            }
+
             return React.createElement('div', {
                 style: {
                     background: 'var(--vds-bg)',
@@ -37,22 +70,36 @@
                     title: 'VASYA — Rule Writer'
                 }),
 
-                // Блок статистики каскаду
+                // Блок статистики — реальні дані з GitHub API після натискання кнопки, інакше прочерк
                 React.createElement('div', {
                     key: 'stats',
                     style: { display: 'flex', gap: '44px', marginBottom: '40px', flexWrap: 'wrap' }
                 }, [
-                    React.createElement(Stat, { key: 'stat1', numeral: '05/09', label: 'Core Traits Unlocked' }),
-                    React.createElement(Stat, { key: 'stat2', numeral: '06', label: 'Active Abilities' }),
-                    React.createElement(Stat, { key: 'stat3', numeral: '100%', label: 'Closed Loop Sync' })
+                    React.createElement(Stat, {
+                        key: 'stat1',
+                        numeral: repoData ? String(repoData.stars) : '—',
+                        label: 'GitHub Stars (реально)'
+                    }),
+                    React.createElement(Stat, {
+                        key: 'stat2',
+                        numeral: repoData ? String(repoData.openIssues) : '—',
+                        label: 'Відкриті Issues (реально)'
+                    }),
+                    React.createElement(Stat, {
+                        key: 'stat3',
+                        numeral: repoData ? repoData.commitDate : '—',
+                        label: 'Останній коміт (реально)'
+                    })
                 ]),
 
-                // Прогрес розгортання правил
-                React.createElement('div', { key: 'progress', style: { marginBottom: '40px', maxWidth: '600px' } }, [
+                // Прогрес — відображає реальний стан fetch-запиту, не вигадану метрику
+                status !== 'idle' && React.createElement('div', { key: 'progress', style: { marginBottom: '40px', maxWidth: '600px' } }, [
                     React.createElement(ProgressBar, {
-                        percent: 85,
-                        label: 'Системна інтеграція правил',
-                        caption: '85% | Cascade Ready'
+                        percent: status === 'loading' ? 50 : status === 'done' ? 100 : 100,
+                        label: status === 'loading' ? 'Запит до api.github.com...' : status === 'done' ? 'Дані отримано' : 'Помилка запиту',
+                        caption: status === 'done' && repoData
+                            ? `${repoData.commitAuthor}: "${repoData.commitMessage}"`
+                            : status === 'error' ? errorMsg : '...'
                     })
                 ]),
 
@@ -90,12 +137,12 @@
                     )
                 ),
 
-                // Кнопка запуску зв'язку із зовнішніми сервісами
+                // Кнопка — реальний виклик GitHub API, без вигаданих ефектів
                 React.createElement(Button, {
                     key: 'btn',
                     variant: 'primary',
-                    href: '#sync'
-                }, 'Запустити замикання кола (Claude Code)')
+                    onClick: (e) => { e.preventDefault(); fetchRealGithubData(); }
+                }, status === 'loading' ? 'Завантаження з GitHub...' : status === 'done' ? 'Оновити дані ✓' : status === 'error' ? 'Спробувати ще раз' : 'Отримати реальні дані з GitHub')
             ]);
         }
 
