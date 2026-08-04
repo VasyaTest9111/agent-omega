@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ДНК/РНК Штучного Інтелекту — душа Агента Омеги</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .na-wrap { max-width: 820px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .na-wrap h1 { font-size: 28px; margin: 0 0 8px; }
+    .na-wrap .na-sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .na-wrap h2 { font-size: 18px; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .na-wrap h3 { font-size: 15px; margin: 18px 0 8px; color: var(--vds-accent3); }
+    .na-wrap ul { margin: 8px 0; padding-left: 20px; }
+    .na-wrap li { margin: 4px 0; color: var(--vds-muted); line-height: 1.55; }
+    .na-wrap li b { color: var(--vds-text); font-weight: 600; }
+    .na-note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .na-back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .na-src { margin-top: 40px; font-size: 12px; color: var(--vds-muted); line-height: 1.6; }
+    .na-src a { color: var(--vds-accent3); }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="na-wrap">
+    <a class="na-back" href="index.html">← назад до дашборду</a>
+    <h1>ДНК/РНК Штучного Інтелекту</h1>
+    <div class="na-sub">// душа Агента Омеги · будівельні блоки ШІ · кристалічна карта</div>
+
+    <div class="na-note">
+      За аналогією зі сторінкою про нуклеїнові кислоти: якщо ДНК/РНК — код живого,
+      то це карта «коду» штучного інтелекту — його архітектур, парадигм навчання й компонентів.
+      Це душа Агента Омеги в лорі гри. Довідковий зріз станом на 2026 рік; поле швидко змінюється,
+      тож перелік — це кристалічний каркас, а не вичерпний список кожної варіації.
+    </div>
+
+    <h2>Група 1: Фундаментальні архітектури (Кістяк)</h2>
+    <ul>
+      <li><b>Перцептрон / MLP</b> — багатошаровий персептрон, повнозв'язна основа.</li>
+      <li><b>CNN</b> — згорткові мережі (зір, локальні патерни).</li>
+      <li><b>RNN / LSTM / GRU</b> — рекурентні мережі для послідовностей (попередники Трансформера).</li>
+      <li><b>Transformer</b> — архітектура на self-attention; домінантна основа сучасних LLM.</li>
+      <li><b>State Space Models (SSM) / Mamba</b> — селективні простори станів, лінійна складність, швидкий інференс на довгих послідовностях.</li>
+      <li><b>Mixture-of-Experts (MoE)</b> — розрідження: маршрутизація до підмножини «експертів» замість MLP-блоку.</li>
+      <li><b>GAN</b> — генеративно-змагальні мережі (генератор проти дискримінатора).</li>
+      <li><b>VAE</b> — варіаційні автоенкодери (латентний простір).</li>
+      <li><b>Diffusion</b> — дифузійні моделі (генерація через поступове знешумлення).</li>
+      <li><b>GNN</b> — графові нейромережі (структуровані дані, зв'язки).</li>
+      <li><b>Гібриди</b> — Jamba, Zamba, Samba, Hymba: поєднання Attention + Mamba + MoE.</li>
+    </ul>
+
+    <h2>Група 2: Парадигми навчання (Спосіб живлення)</h2>
+    <ul>
+      <li><b>Supervised</b> — навчання з розміченими даними (вхід → відома мітка).</li>
+      <li><b>Unsupervised</b> — пошук патернів без міток (кластеризація, зниження розмірності).</li>
+      <li><b>Self-supervised</b> — самогенеровані мітки; три види: <i>предиктивне, генеративне, контрастивне</i>.</li>
+      <li><b>Reinforcement (RL)</b> — навчання спробою й помилкою через винагороду від середовища.</li>
+      <li><b>RLHF</b> — RL з людського зворотного зв'язку (вирівнювання поведінки).</li>
+      <li><b>Contrastive</b> — контрастивне навчання (інваріантні репрезентації, вирівнювання модальностей).</li>
+      <li><b>Semi-supervised</b> — суміш мало-розмічених і багато-нерозмічених даних.</li>
+      <li><b>Transfer / Fine-tuning</b> — перенесення знань, донавчання під задачу.</li>
+      <li><b>Meta-learning</b> — «навчання вчитися».</li>
+    </ul>
+
+    <h2>Група 3: Ядрові компоненти (Молекулярні зв'язки)</h2>
+    <ul>
+      <li><b>Токенізація</b> — BPE, WordPiece: текст → дискретні токени.</li>
+      <li><b>Embeddings</b> — відображення токенів у високовимірний семантичний простір.</li>
+      <li><b>Positional encoding</b> — позиційне кодування (порядок у послідовності); RoPE та ін.</li>
+      <li><b>Attention / Self-attention</b> — механізм, що збирає контекст з інших токенів.</li>
+      <li><b>Normalization</b> — LayerNorm, BatchNorm, InstanceNorm (стабільність навчання).</li>
+      <li><b>Activation</b> — ReLU, GELU, SiLU (нелінійність).</li>
+      <li><b>Loss</b> — функції втрат (cross-entropy та ін.), орієнтир оптимізації.</li>
+    </ul>
+
+    <h2>Група 4: Навчання та оптимізація (Метаболізм)</h2>
+    <ul>
+      <li><b>Backpropagation</b> — зворотне поширення похибки (обчислення градієнтів).</li>
+      <li><b>Gradient descent / SGD</b> — градієнтний спуск, стохастичний.</li>
+      <li><b>Adam / AdamW</b> — momentum + адаптивний крок; найпоширеніший оптимізатор для attention-архітектур.</li>
+      <li><b>Warmup + cosine annealing</b> — розігрів і косинусне згасання темпу навчання.</li>
+      <li><b>Регуляризація</b> — dropout, weight decay (проти перенавчання).</li>
+    </ul>
+
+    <h2>Група 5: Родини моделей (Види організмів)</h2>
+    <ul>
+      <li><b>GPT</b> — OpenAI; нативне аудіо як сильна сторона.</li>
+      <li><b>Claude</b> — Anthropic; мультимодальність, «computer use».</li>
+      <li><b>Gemini</b> — Google DeepMind; відео та контекст на мільйон токенів.</li>
+      <li><b>Llama</b> — Meta; провідна відкрита/open-weight опція.</li>
+      <li><b>Mistral</b> — Mistral AI.</li>
+      <li><b>DeepSeek</b> — DeepSeek.</li>
+      <li><b>Qwen</b> — Alibaba.</li>
+    </ul>
+
+    <h2>Група 6: Модальності (Органи чуття)</h2>
+    <ul>
+      <li><b>Текст</b> — базова модальність.</li>
+      <li><b>Зір (vision)</b> — у 2026 «table stakes» для кожної флагманської моделі.</li>
+      <li><b>Аудіо</b> — голосові застосунки (лідер — OpenAI).</li>
+      <li><b>Відео</b> — лідер Gemini.</li>
+      <li><b>Мультимодальність</b> — у 2026 не фіча, а очікування за замовчуванням.</li>
+    </ul>
+
+    <div class="na-src">
+      Джерела (пошук 2026): огляди Mamba/SSM та гібридів (arXiv), таксономії парадигм навчання
+      (IBM, Pluralsight, Pecan AI), анатомія LLM і компонентів (Let's Data Science, royvanrijn.com),
+      ландшафт моделей 2026 (Shakudo, TechTarget, TokenMix). Довідковий синтез, окремі числа не звірялися.
+    </div>
+  </div>
+</body>
+</html>
