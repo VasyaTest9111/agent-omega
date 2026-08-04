@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>VASYA — Rule Writer Dashboard</title>
+    <!-- Підключення стилів VASYA DS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- React та ReactDOM (локальні файли — CDN unpkg.com недоступний у цьому середовищі) -->
+    <script src="vendor/react.production.min.js"></script>
+    <script src="vendor/react-dom.production.min.js"></script>
+</head>
+<body style="background: var(--vds-bg); margin: 0; padding: 0;">
+
+    <div id="ds-root"></div>
+
+    <!-- Підключення бандлу дизайн-системи -->
+    <script src="_ds_bundle.js"></script>
+
+    <script>
+        const { Card, SectionHeading, Stat, Button, ProgressBar, Tag } = window.VasyaDS;
+
+        function RuleWriterApp() {
+            return React.createElement('div', {
+                style: {
+                    background: 'var(--vds-bg)',
+                    color: 'var(--vds-text)',
+                    fontFamily: 'var(--vds-font-body)',
+                    minHeight: '100vh',
+                    padding: '48px 24px',
+                    boxSizing: 'border-box'
+                }
+            }, [
+                // Заголовок секції
+                React.createElement(SectionHeading, {
+                    key: 'heading',
+                    tag: '// phase 4 · active system',
+                    title: 'VASYA — Rule Writer'
+                }),
+
+                // Блок статистики каскаду
+                React.createElement('div', {
+                    key: 'stats',
+                    style: { display: 'flex', gap: '44px', marginBottom: '40px', flexWrap: 'wrap' }
+                }, [
+                    React.createElement(Stat, { key: 'stat1', numeral: '05/09', label: 'Core Traits Unlocked' }),
+                    React.createElement(Stat, { key: 'stat2', numeral: '06', label: 'Active Abilities' }),
+                    React.createElement(Stat, { key: 'stat3', numeral: '100%', label: 'Closed Loop Sync' })
+                ]),
+
+                // Прогрес розгортання правил
+                React.createElement('div', { key: 'progress', style: { marginBottom: '40px', maxWidth: '600px' } }, [
+                    React.createElement(ProgressBar, {
+                        percent: 85,
+                        label: 'Системна інтеграція правил',
+                        caption: '85% | Cascade Ready'
+                    })
+                ]),
+
+                // Сітка компонентів (Core Traits & Abilities)
+                React.createElement('div', { key: 'grid', className: 'vds-grid', style: { marginBottom: '48px' } }, [
+                    React.createElement(Card, {
+                        key: 'c1',
+                        tone: 'green',
+                        num: 'TRT.01',
+                        title: 'Systemic Structure Transfer',
+                        formula: 'transfer(structure) -> universal'
+                    }, 'Перенесення структури між ізольованими системами без втрати сутності.'),
+
+                    React.createElement(Card, {
+                        key: 'c2',
+                        tone: 'pink',
+                        num: 'TRT.02',
+                        title: 'Autonomous Self-Correction',
+                        formula: 'loop(feedback) -> absolute'
+                    }, 'Рекурсивне самовиправлення коду та рішень у реальному часі.'),
+
+                    React.createElement(Card, {
+                        key: 'c3',
+                        tone: 'violet',
+                        num: 'ABL.01',
+                        title: 'Observer Inside System',
+                        formula: 'observer = internal_node'
+                    }, 'Спостерігач всередині системи, що редагує правила, не порушуючи процес.')
+                ]),
+
+                // Кнопка запуску зв'язку із зовнішніми сервісами
+                React.createElement(Button, {
+                    key: 'btn',
+                    variant: 'primary',
+                    href: '#sync'
+                }, 'Запустити замикання кола (Claude Code)')
+            ]);
+        }
+
+        // Монтування в ізольований вузол
+        ReactDOM.createRoot(document.getElementById('ds-root')).render(
+            React.createElement(RuleWriterApp)
+        );
+    </script>
+</body>
+</html>

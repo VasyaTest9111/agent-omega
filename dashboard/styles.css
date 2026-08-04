@@ -1,0 +1,266 @@
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  src: url("vendor/fonts/space-grotesk/space-grotesk-latin-400-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  src: url("vendor/fonts/space-grotesk/space-grotesk-latin-500-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  src: url("vendor/fonts/space-grotesk/space-grotesk-latin-600-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  src: url("vendor/fonts/space-grotesk/space-grotesk-latin-700-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("vendor/fonts/jetbrains-mono/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 500;
+  src: url("vendor/fonts/jetbrains-mono/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: url("vendor/fonts/jetbrains-mono/jetbrains-mono-latin-700-normal.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  /* Accents */
+  --vds-accent: #7c6af7;   /* violet — primary */
+  --vds-accent2: #f72585;  /* pink */
+  --vds-accent3: #4cc9f0;  /* cyan */
+  --vds-accent4: #06ffa5;  /* green */
+  --vds-accent5: #ffb703;  /* amber */
+
+  /* Surfaces (dark-first) */
+  --vds-bg: #06060f;
+  --vds-bg2: #0d0d1c;
+  --vds-bg3: #14142a;
+
+  /* Text */
+  --vds-text: #f2f1fb;
+  --vds-muted: #8a89a8;
+  --vds-border: #23233f;
+  --vds-glow: 0 0 24px rgba(124, 106, 247, 0.45);
+
+  /* Fonts */
+  --vds-font-body: "Space Grotesk", -apple-system, "Segoe UI", sans-serif;
+  --vds-font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--vds-font-body);
+}
+
+/* ---------- layout ---------- */
+.vds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ---------- section heading ---------- */
+.vds-section-heading {
+  margin-bottom: 32px;
+}
+
+.vds-tag-label {
+  font-family: var(--vds-font-mono);
+  font-size: 12px;
+  color: var(--vds-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.vds-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, var(--vds-accent), var(--vds-accent3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- stat ---------- */
+.vds-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vds-stat-numeral {
+  font-family: var(--vds-font-mono);
+  font-size: 30px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--vds-accent), var(--vds-accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.vds-stat-label {
+  font-size: 13px;
+  color: var(--vds-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- card ---------- */
+.vds-card {
+  background: var(--vds-bg2);
+  border: 1px solid var(--vds-border);
+  border-left: 3px solid var(--vds-accent);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* tone → colour family: violet (neutral/services), green (identity/DNA), pink (frameworks/offers) */
+.vds-tone-violet { border-left-color: var(--vds-accent); }
+.vds-tone-green { border-left-color: var(--vds-accent4); }
+.vds-tone-pink { border-left-color: var(--vds-accent2); }
+.vds-tone-cyan { border-left-color: var(--vds-accent3); }
+.vds-tone-amber { border-left-color: var(--vds-accent5); }
+
+.vds-card-num {
+  font-family: var(--vds-font-mono);
+  font-size: 11px;
+  color: var(--vds-muted);
+  margin-bottom: 8px;
+}
+
+.vds-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--vds-text);
+}
+
+.vds-card-formula {
+  display: block;
+  font-family: var(--vds-font-mono);
+  font-size: 12px;
+  color: var(--vds-muted);
+  background: var(--vds-bg);
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.vds-card-body {
+  font-size: 14px;
+  color: var(--vds-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---------- progress bar ---------- */
+.vds-progress-label {
+  font-size: 13px;
+  color: var(--vds-muted);
+  margin-bottom: 8px;
+}
+
+.vds-progress-track {
+  height: 8px;
+  background: var(--vds-bg2);
+  border: 1px solid var(--vds-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.vds-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vds-accent), var(--vds-accent3));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.vds-progress-caption {
+  font-family: var(--vds-font-mono);
+  font-size: 12px;
+  color: var(--vds-muted);
+  margin-top: 6px;
+}
+
+/* ---------- button ---------- */
+.vds-btn {
+  display: inline-block;
+  font-family: var(--vds-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.vds-btn-primary {
+  background: linear-gradient(135deg, var(--vds-accent), var(--vds-accent3));
+  color: #06060f;
+  box-shadow: var(--vds-glow);
+}
+
+.vds-btn-outline {
+  background: transparent;
+  border-color: var(--vds-border);
+  color: var(--vds-text);
+}
+
+/* kept for backward-compat with earlier "secondary" naming */
+.vds-btn-secondary {
+  background: transparent;
+  border-color: var(--vds-border);
+  color: var(--vds-text);
+}
+
+/* ---------- tag ---------- */
+.vds-tag {
+  display: inline-block;
+  font-family: var(--vds-font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--vds-bg2);
+  border: 1px solid var(--vds-border);
+  color: var(--vds-muted);
+}
+
+/* ---------- quote ---------- */
+.vds-quote {
+  font-style: italic;
+  color: var(--vds-text);
+  border-left: 2px solid var(--vds-accent);
+  padding-left: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+}
