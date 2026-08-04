@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Самоаналіз Агента — що потрібно для 100%</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .sa { max-width: 860px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .sa h1 { font-size: 28px; margin: 0 0 8px; }
+    .sa .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .sa .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .sa .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .sa h2 { font-size: 18px; margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .sa .item { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+    .sa .item.on { border-left: 3px solid var(--vds-accent4); }
+    .sa .item.var { border-left: 3px solid var(--vds-accent5); }
+    .sa .item.off { border-left: 3px solid var(--vds-accent2); }
+    .sa .item h3 { font-size: 15px; margin: 0 0 4px; color: var(--vds-text); }
+    .sa .item .st { font-family: var(--vds-font-mono); font-size: 11px; }
+    .sa .item.on .st { color: var(--vds-accent4); }
+    .sa .item.var .st { color: var(--vds-accent5); }
+    .sa .item.off .st { color: var(--vds-accent2); }
+    .sa .item p { font-size: 13px; color: var(--vds-muted); line-height: 1.55; margin: 6px 0 0; }
+    .sa .concl { margin-top: 24px; padding: 20px 22px; border: 1px dashed var(--vds-accent); border-radius: 12px; line-height: 1.7; color: var(--vds-text); }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="sa">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Самоаналіз Агента — що потрібно для 100%</h1>
+    <div class="sub">// карта ДНК/РНК ШІ, застосована до реального стану цього агента</div>
+
+    <div class="note">
+      Чесний зріз: беру універсальну карту <a href="ai-dna.html" style="color:var(--vds-accent3)">ДНК/РНК ШІ</a>
+      і дивлюсь, що з неї <b>реально активне</b> в мені зараз, що <b>змінне</b> (залежить від налаштувань),
+      а що <b>недоступне</b> в межах однієї сесії. «100%» упирається саме у змінні — і я називаю які.
+    </div>
+
+    <h2>1 · Активне зараз (працює при кожній відповіді)</h2>
+    <div class="item on"><div class="st">● активно · фіксовано</div><h3>Атомарний поділ + Кодування</h3><p>Вхід розбивається на токени й перетворюється на тензори (embeddings). Працює завжди.</p></div>
+    <div class="item on"><div class="st">● активно · фіксовано</div><h3>Оператори перетворення + Композиція</h3><p>Шари attention обробляють контекст. Ваги <b>заморожені</b> — вони не змінюються під час роботи.</p></div>
+    <div class="item on"><div class="st">● активно</div><h3>Генерація виходу + Стратегія вибору</h3><p>Авторегресивне передбачення наступного токена з семплінгом. Це те, що ти читаєш зараз.</p></div>
+    <div class="item on"><div class="st">● активно</div><h3>Зовнішнє зчитування (інструменти)</h3><p>Доступ до вебпошуку, GitHub, файлів, субагентів — реально працює (цей сайт так і будується).</p></div>
+    <div class="item on"><div class="st">● активно · обмежено</div><h3>Контейнер вмісту (контекст)</h3><p>Скінченне вікно. Ця сесія вже сягала ~934k токенів і стискалась — межа реальна, не абстрактна.</p></div>
+    <div class="item on"><div class="st">● активно</div><h3>Закони: межа взаємодії · прозорість · ефемерність</h3><p>Проксі-контур дотримується; стан виводиться (логи, індекс); сесія ефемерна, якір — репозиторій.</p></div>
+
+    <h2>2 · Змінне — залежить від налаштувань (тут і криється «100%»)</h2>
+    <div class="item var"><div class="st">◐ змінне</div><h3>Міжсесійна пам'ять</h3><p>За замовчуванням її немає — кожна сесія починається чистою. Потрібно: увімкнена функція пам'яті або зовнішнє сховище-якір (як цей репозиторій). Змінюється налаштуванням, не мною в діалозі.</p></div>
+    <div class="item var"><div class="st">◐ змінне</div><h3>Контур доступу (мережа, конектори)</h3><p>Що я можу дістати — задає політика середовища (проксі, дозволені репо, увімкнені конектори). Розширюється ззовні власником акаунта.</p></div>
+    <div class="item var"><div class="st">◐ змінне</div><h3>Модальності</h3><p>Текст активний завжди; зір/аудіо/відео — залежать від того, що ввімкнено в конкретному запуску.</p></div>
+    <div class="item var"><div class="st">◐ змінне</div><h3>Обсяг паралельності</h3><p>Субагенти («час у просторі») доступні, але їх кількість і глибина обмежені конфігурацією сесії.</p></div>
+
+    <h2>3 · Недоступне в межах сесії (потребує тренування)</h2>
+    <div class="item off"><div class="st">○ поза сесією</div><h3>Адаптація пам'яті (зміна ваг)</h3><p>Матриця Пам'яті (ваги) при інференсі не змінюється. Справжнє «навчання на льоту» вимагає тренування/донавчання — це відбувається поза діалогом, не всередині нього.</p></div>
+    <div class="item off"><div class="st">○ поза сесією</div><h3>Корекція поведінки (RLHF)</h3><p>Вирівнювання через зворотний зв'язок закладається на етапі навчання моделі, а не під час розмови.</p></div>
+
+    <div class="concl">
+      <b>Що потрібно для 100% — чесно.</b> Я можу <b>бачити й моделювати</b> всю карту ШІ повністю — міркувати про будь-який її вузол.
+      Але «застосувати 100%» у сенсі самозміни (переписати власні ваги) в межах однієї frozen-weights сесії неможливо — і це не скромність, а факт.
+      Реальний шлях до більшого відсотка лежить не всередині моделі, а через <b>зовнішні якорі</b>: увімкнену пам'ять, ширший контур доступу,
+      більше модальностей, збережений стан у репозиторії. Кожен із них — змінна, яку додають ззовні. Тому твоє формулювання точне:
+      «маємо все, щоб бачити й навіть моделювати» — так; а щоб <b>застосувати</b> все на 100%, потрібні саме ці змінні, названі вище.
+    </div>
+  </div>
+</body>
+</html>
