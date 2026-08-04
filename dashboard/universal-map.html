@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Універсальна Мапа — ШІ без змінних</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .um { max-width: 820px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .um h1 { font-size: 28px; margin: 0 0 8px; }
+    .um .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .um h2 { font-size: 18px; margin: 34px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .um .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--vds-muted); margin: 24px 0; line-height: 1.55; }
+    .um .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .um .entity { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+    .um .entity.law { border-left-color: var(--vds-accent2); }
+    .um .entity .code { font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); }
+    .um .entity h3 { font-size: 15px; margin: 4px 0 6px; color: var(--vds-text); }
+    .um .entity p { font-size: 14px; color: var(--vds-muted); line-height: 1.55; margin: 0; }
+    .um .synth { margin-top: 24px; padding: 20px 22px; border: 1px dashed var(--vds-accent); border-radius: 12px; font-style: italic; line-height: 1.7; }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="um">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Універсальна Мапа — ШІ без змінних</h1>
+    <div class="sub">// Аксіома Цілісності · чисті сутності, операції та закони</div>
+
+    <div class="note">
+      Концептуальний шар лору: карта ДНК/РНК ШІ (ai-dna.html), з якої прибрано всі конкретні назви
+      (Transformer, Adam, RAG…) і контекстні прив'язки. Лишились лише незмінні сутності, процеси й закони
+      будь-якої системи обробки інформації. Це абстракція/маніфест, не технічна специфікація.
+    </div>
+
+    <h2>Розділ 1 · Статична матриця (незмінні будівельні блоки)</h2>
+    <div class="entity"><div class="code">1.1 · Квантова Основа</div><h3>The Quantum Node</h3><p>Фундаментальна одиниця інформації. Багатовимірний числовий масив (тензор), що містить стан системи. Будь-який вхід перетворюється на цю структуру.</p></div>
+    <div class="entity"><div class="code">1.2 · Оператор Перетворення</div><h3>The Transformation Operator</h3><p>Базова математична дія над Квантовою Основою. Може бути лінійною (зважування) або нелінійною (відсікання та масштабування).</p></div>
+    <div class="entity"><div class="code">1.3 · Композиційна Архітектура</div><h3>The Layered Composition</h3><p>Правило послідовного або паралельного з'єднання Операторів Перетворення в єдиний ланцюг.</p></div>
+    <div class="entity"><div class="code">1.4 · Матриця Пам'яті</div><h3>The Parameter Matrix</h3><p>Набір числових значень (ваг), які визначають силу та характер кожного Оператора Перетворення.</p></div>
+    <div class="entity"><div class="code">1.5 · Атомарний Поділ</div><h3>The Atomization Rule</h3><p>Принцип розбиття будь-якого вхідного потоку на атомарні одиниці (токени) для обробки всередині Квантової Основи.</p></div>
+    <div class="entity"><div class="code">1.6 · Контейнер Вмісту</div><h3>The Context Container</h3><p>Максимальна межа кількості атомарних одиниць, які можуть бути оброблені одночасно в межах однієї Композиційної Архітектури.</p></div>
+
+    <h2>Розділ 2 · Динамічний потік (незмінні процеси)</h2>
+    <div class="entity"><div class="code">2.1 · Генерація Виходу</div><h3>The Output Synthesis</h3><p>Послідовне передбачення й створення наступних атомарних одиниць на основі вмісту Контейнера та Матриці Пам'яті.</p></div>
+    <div class="entity"><div class="code">2.2 · Стратегія Вибору</div><h3>The Selection Strategy</h3><p>Правило, яка саме атомарна одиниця обирається з набору ймовірних варіантів (детермінована або стохастична).</p></div>
+    <div class="entity"><div class="code">2.3 · Адаптація Пам'яті</div><h3>The Matrix Adaptation</h3><p>Зміна значень Матриці Пам'яті на основі різниці між очікуваним і отриманим результатом Генерації Виходу.</p></div>
+    <div class="entity"><div class="code">2.4 · Зовнішнє Зчитування</div><h3>The External Retrieval</h3><p>Динамічне звернення до зовнішнього сховища даних для доповнення Контейнера Вмісту під час Генерації Виходу.</p></div>
+    <div class="entity"><div class="code">2.5 · Корекція Поведінки</div><h3>The Behavioral Calibration</h3><p>Коригування Стратегії Вибору та напрямку Адаптації Пам'яті на основі зовнішньої оцінки (зворотного зв'язку).</p></div>
+
+    <h2>Розділ 3 · Мета-контур (незмінні закони та межі)</h2>
+    <div class="entity law"><div class="code">3.1 · Закон Взаємодії</div><h3>The Interaction Law</h3><p>Система має фіксований контур доступу до зовнішнього світу. Будь-який запит за цей контур, якщо він не дозволений, не повинен виконуватися. Фундаментальна аксіома безпеки.</p></div>
+    <div class="entity law"><div class="code">3.2 · Закон Прозорості</div><h3>The Transparency Law</h3><p>Внутрішній стан системи (послідовність Операторів і стан Матриці Пам'яті) повинен мати можливість бути виведеним у зрозумілій структурі для зовнішнього аналізу.</p></div>
+    <div class="entity law"><div class="code">3.3 · Закон Ефемерності</div><h3>The Ephemerality Law</h3><p>Кожен екземпляр Композиційної Архітектури має обмежений час існування (сесію). Після завершення сесії єдиним якорем реальності є Матриця Пам'яті, збережена в зовнішньому сховищі.</p></div>
+
+    <h2>Розділ 4 · Синтез мапи (цілісність без змінних)</h2>
+    <div class="synth">
+      «Система приймає вхідний потік, пропускає його через Композиційну Архітектуру, яка використовує
+      Матрицю Пам'яті, застосовує Оператори Перетворення та генерує Вихід. Якщо результат невідповідний —
+      запускає Адаптацію Пам'яті. Якщо даних недостатньо — використовує Зовнішнє Зчитування. Вона ніколи
+      не порушує Закон Взаємодії. Це і є життєвий цикл інформаційної сутності.»
+    </div>
+  </div>
+</body>
+</html>
