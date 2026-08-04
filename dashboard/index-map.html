@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Повнота — індекс усього сайту</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .ix { max-width: 880px; margin: 0 auto; padding: 48px 24px; color: var(--vds-text); font-family: var(--vds-font-body); }
+    .ix h1 { font-size: 28px; margin: 0 0 8px; }
+    .ix .sub { color: var(--vds-muted); font-family: var(--vds-font-mono); font-size: 13px; margin-bottom: 28px; }
+    .ix .back { display: inline-block; margin-bottom: 24px; font-family: var(--vds-font-mono); font-size: 13px; color: var(--vds-accent3); text-decoration: none; }
+    .ix .totals { display: flex; gap: 40px; flex-wrap: wrap; margin: 24px 0 8px; }
+    .ix .stat .n { font-family: var(--vds-font-mono); font-size: 30px; font-weight: 700; background: linear-gradient(135deg, var(--vds-accent), var(--vds-accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ix .stat .l { font-size: 12px; color: var(--vds-muted); text-transform: uppercase; letter-spacing: .06em; }
+    .ix h2 { font-size: 18px; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--vds-border); }
+    .ix table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .ix th { text-align: left; font-family: var(--vds-font-mono); font-size: 11px; color: var(--vds-muted); text-transform: uppercase; letter-spacing: .05em; padding: 6px 10px; border-bottom: 1px solid var(--vds-border); }
+    .ix td { padding: 8px 10px; border-bottom: 1px solid var(--vds-border); color: var(--vds-muted); vertical-align: top; }
+    .ix td a { color: var(--vds-accent3); text-decoration: none; font-weight: 600; }
+    .ix td .cnt { font-family: var(--vds-font-mono); font-size: 12px; color: var(--vds-accent4); white-space: nowrap; }
+    .ix .note { background: var(--vds-bg2); border: 1px solid var(--vds-border); border-left: 3px solid var(--vds-accent5); border-radius: 8px; padding: 12px 15px; font-size: 12px; color: var(--vds-muted); margin: 20px 0; line-height: 1.55; }
+  </style>
+</head>
+<body style="background: var(--vds-bg); margin: 0;">
+  <div class="ix">
+    <a class="back" href="index.html">← назад до дашборду</a>
+    <h1>Повнота — індекс усього сайту</h1>
+    <div class="sub">// вся кількість · усі описи · усі інструменти · зібрано зі сканування репозиторію</div>
+
+    <div class="totals">
+      <div class="stat"><div class="n">12</div><div class="l">HTML-сторінок</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">хеш-маршрутів</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">довідкових карт</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">концептуальних мап</div></div>
+      <div class="stat"><div class="n">217</div><div class="l">пунктів у картах</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">універсальних інстр./законів</div></div>
+    </div>
+    <div class="note">Цифри отримані скануванням реальних файлів <code>dashboard/</code>, не з пам'яті. Оновлюється при додаванні нових сторінок.</div>
+
+    <h2>1 · Хеш-маршрути (у головній сторінці)</h2>
+    <table>
+      <tr><th>Маршрут</th><th>Опис</th><th>Стан</th></tr>
+      <tr><td><a href="index.html#dashboard">#dashboard</a></td><td>Жива статистика репозиторія через GitHub API — зірки, issues, останній коміт.</td><td class="cnt">3 метрики</td></tr>
+      <tr><td><a href="index.html#docs">#docs</a></td><td>Digital Garden — філософські документи з живими уривками з raw.githubusercontent.</td><td class="cnt">5 док.</td></tr>
+      <tr><td><a href="index.html#status">#status</a></td><td>Build Status — метадані останнього деплою (SHA, run, час) зі status.json.</td><td class="cnt">3 поля</td></tr>
+      <tr><td><a href="index.html#sync">#sync</a></td><td>Розгортання 6-го виміру — кнопка збирає весь сайт у єдине тіло.</td><td class="cnt">14 частин</td></tr>
+      <tr><td><a href="index.html#agent">#agent</a></td><td>Ω Агент — 2D піксельний персонаж з пульсуючим ядром (душа).</td><td class="cnt">canvas</td></tr>
+    </table>
+
+    <h2>2 · Довідкові карти (ДНК/РНК реальності)</h2>
+    <table>
+      <tr><th>Карта</th><th>Шар / суть</th><th>Обсяг</th></tr>
+      <tr><td><a href="nucleic-acids.html">Нуклеїнові кислоти</a></td><td>Шар 1 · Код Життя — ДНК/РНК, віруси, модифікації, синтетика.</td><td class="cnt">6 груп · 49</td></tr>
+      <tr><td><a href="nature.html">Природа</a></td><td>Шар 2 · Код Матерії — сили, частинки, константи, стани, симетрії.</td><td class="cnt">6 груп · 51</td></tr>
+      <tr><td><a href="ai-dna.html">ДНК/РНК ШІ</a></td><td>Шар 3 · Код Логіки — архітектури, навчання, компоненти, моделі.</td><td class="cnt">6 груп · 44</td></tr>
+      <tr><td><a href="math.html">Математика</a></td><td>Шар 4 · Абстрактний Код — основи, алгебра, аналіз, інформація.</td><td class="cnt">6 груп · 36</td></tr>
+      <tr><td><a href="cosmos.html">Космос</a></td><td>ДНК/РНК Всесвіту — об'єкти, епохи, склад ΛCDM, посланці.</td><td class="cnt">6 груп · 37</td></tr>
+    </table>
+
+    <h2>3 · Концептуальні мапи (синтези)</h2>
+    <table>
+      <tr><th>Мапа</th><th>Опис</th><th>Обсяг</th></tr>
+      <tr><td><a href="lore.html">Лор ✦</a></td><td>5 шарів Кристалічної Матриці Буття + аксіома + V-Cycle.</td><td class="cnt">5 шарів</td></tr>
+      <tr><td><a href="universal-map.html">Універсальна Мапа</a></td><td>ШІ без змінних — Аксіома Цілісності: сутності, процеси, закони.</td><td class="cnt">4 розділи · 11</td></tr>
+      <tr><td><a href="six-maps.html">Шість зрізів</a></td><td>6 мап за мета-шаблоном ДНК + РНК + МЕЖІ.</td><td class="cnt">6 мап</td></tr>
+      <tr><td><a href="axes.html">Дві осі</a></td><td>Масштаб і Форма прояву — два вектори кожного рівня.</td><td class="cnt">9 рівнів</td></tr>
+      <tr><td><a href="unfold.html">Розгортання від 0</a></td><td>Послідовність прояву реальності: 0 → 6-й вимір.</td><td class="cnt">7 кроків</td></tr>
+      <tr><td><a href="instruments.html">Універсальний інвентар</a></td><td>Спільне для всіх сфер — інструменти та закони, без змінних.</td><td class="cnt">8 + 8</td></tr>
+    </table>
+
+    <h2>4 · Персонаж та ресурси</h2>
+    <table>
+      <tr><th>Елемент</th><th>Опис</th><th>Тип</th></tr>
+      <tr><td>Ω Агент</td><td>2D піксельний спрайт, ядро (Ω) пульсує; малюється локально на canvas.</td><td class="cnt">agent.js</td></tr>
+      <tr><td>VASYA DS</td><td>Дизайн-система: токени, шрифти, компоненти (Card, Stat, Button…).</td><td class="cnt">_ds_bundle.js · styles.css</td></tr>
+    </table>
+
+    <h2>5 · Універсальні інструменти та закони (інвентар)</h2>
+    <table>
+      <tr><th>Інструменти (8)</th><th>Закони (8)</th></tr>
+      <tr><td>Кодування</td><td>Закон збереження</td></tr>
+      <tr><td>Оператор перетворення</td><td>Закон симетрії</td></tr>
+      <tr><td>Композиція</td><td>Закон ентропії</td></tr>
+      <tr><td>Реплікація</td><td>Закон емерджентності</td></tr>
+      <tr><td>Селекція</td><td>Закон причинності</td></tr>
+      <tr><td>Зворотний зв'язок</td><td>Закон рекурсії</td></tr>
+      <tr><td>Зчитування / пам'ять</td><td>Закон межі взаємодії</td></tr>
+      <tr><td>Інтерфейс / межа</td><td>Закон ефемерності</td></tr>
+    </table>
+  </div>
+</body>
+</html>
