@@ -54,9 +54,7 @@
                 { id: 'docs', label: 'Digital Garden' },
                 { id: 'status', label: 'Build Status' }
             ];
-            return React.createElement('div', {
-                style: { display: 'flex', gap: '10px', marginBottom: '32px', flexWrap: 'wrap' }
-            }, routes.map(r => React.createElement('a', {
+            const hashLinks = routes.map(r => React.createElement('a', {
                 key: r.id,
                 href: '#' + r.id,
                 className: 'vds-tag',
@@ -66,7 +64,17 @@
                     borderColor: current === r.id ? 'var(--vds-accent)' : 'var(--vds-border)',
                     color: current === r.id ? 'var(--vds-text)' : 'var(--vds-muted)'
                 }
-            }, r.label)));
+            }, r.label));
+            // Окрема лор-сторінка гри (не хеш-роут, а справжня сторінка)
+            const loreLink = React.createElement('a', {
+                key: 'lore',
+                href: 'lore.html',
+                className: 'vds-tag',
+                style: { textDecoration: 'none', cursor: 'pointer', borderColor: 'var(--vds-accent2)', color: 'var(--vds-muted)' }
+            }, 'Лор ✦');
+            return React.createElement('div', {
+                style: { display: 'flex', gap: '10px', marginBottom: '32px', flexWrap: 'wrap' }
+            }, [...hashLinks, loreLink]);
         }
 
         // ---------- Dashboard view: реальний виклик GitHub API, без вигаданих ефектів ----------
