@@ -25,6 +25,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Generate build status
+        run: |
+          cat > dashboard/status.json <<EOF
+          {
+            "commit": "${GITHUB_SHA::7}",
+            "commit_full": "${GITHUB_SHA}",
+            "run_number": "${GITHUB_RUN_NUMBER}",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "ref": "${GITHUB_REF_NAME}",
+            "deployed_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
       - name: Upload dashboard/ as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
