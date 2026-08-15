@@ -1,0 +1,13 @@
+{
+  "name": "agent-omega-log-scanner",
+  "version": "1.0.0",
+  "description": "Local chokidar log scanner for agent-omega active pipeline",
+  "main": "log_scanner_chokidar.js",
+  "scripts": {
+    "start": "node log_scanner_chokidar.js --config=./log_scanner_config.json",
+    "dry-run": "node log_scanner_chokidar.js --config=./log_scanner_config.json"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3"
+  }
+}
