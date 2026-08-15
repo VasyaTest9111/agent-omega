@@ -1,0 +1,10 @@
+{
+  "log_dir": "./agent-omega/01_CORE_STATE",
+  "ext": ".json",
+  "poll_interval_ms": 2000,
+  "aggregate_interval_ms": 60000,
+  "output_dir": "./agent-omega/log_scanner_output",
+  "mask_keys": ["password", "token", "secret", "key", "apiKey", "accessToken", "refreshToken"],
+  "read_existing": false,
+  "dry_run": true
+}
