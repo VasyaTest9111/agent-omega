@@ -14,13 +14,19 @@ class GeminiClient:
         if self._model is None:
             import google.generativeai as genai
             genai.configure(api_key=self.api_key)
-            self._model = genai.GenerativeModel(
-                model_name="gemini-2.0-flash",
-                system_instruction=(
+            # load system instruction from file if present
+            try:
+                with open("system_instruction.txt", "r", encoding="utf-8") as f:
+                    sys_inst = f.read().strip()
+            except FileNotFoundError:
+                sys_inst = (
                     "Ти — AI-асистент з доступом до GitHub репозиторіїв. "
                     "Відповідай коротко і по суті. Якщо є контекст GitHub — використовуй його. "
                     "Пиши українською якщо питання українською, інакше мовою запиту."
-                ),
+                )
+            self._model = genai.GenerativeModel(
+                model_name="gemini-2.0-flash",
+                system_instruction=sys_inst,
             )
         return self._model
 
